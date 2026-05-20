@@ -106,6 +106,20 @@ function App() {
     });
   };
 
+  const selectQuestionAnswer = (question: Question, option: QuestionOption) => {
+    setState((current) => ({
+      ...current,
+      answers: { ...current.answers, [question.id]: option.id }
+    }));
+  };
+
+  const goToPreviousQuestion = () => {
+    setState((current) => ({
+      ...current,
+      questionIndex: Math.max(current.questionIndex - 1, 0)
+    }));
+  };
+
   return h(PhoneShell, null,
     state.page === "cover" && h(CoverPage, {
       onStart: () => {
@@ -117,7 +131,10 @@ function App() {
       question: allQuestions[state.questionIndex],
       index: state.questionIndex,
       total: allQuestions.length,
-      onAnswer: answerQuestion
+      selectedAnswer: state.answers[allQuestions[state.questionIndex].id],
+      onAnswer: answerQuestion,
+      onSelectAnswer: selectQuestionAnswer,
+      onBack: goToPreviousQuestion
     }),
     state.page === "result" && h(FinalResultPage, {
       calculatedResult,
@@ -140,15 +157,31 @@ function PhoneShell({ children }: { children: React.ReactNode }) {
 
 function CoverPage({ onStart }: { onStart: () => void }) {
   return h("main", {
-    className: "cover-kv relative min-h-screen overflow-hidden",
+    className: "new-cover relative flex min-h-screen flex-col items-center overflow-hidden px-9 pb-9 pt-[17vh] text-center",
   },
+    h("section", { className: "relative z-10" },
+      h("h1", { className: "font-en text-[1.82rem] font-bold leading-tight text-black" }, "REDI：测测你的月经人格"),
+      h("p", { className: "mt-3 font-cn text-[1.32rem] leading-tight text-black/82" }, "你的月经，比MBTI更懂你")
+    ),
+    h("section", { className: "cover-hero-mark", "aria-hidden": "true" },
+      h("span", { className: "cover-loop cover-loop-top" }),
+      h("span", { className: "cover-loop cover-loop-bottom" }),
+      h("span", { className: "cover-chat cover-chat-left" }),
+      h("span", { className: "cover-chat cover-chat-mid" }),
+      h("span", { className: "cover-chat cover-chat-right" }),
+      h("span", { className: "period-face cover-face" }, h("span", { className: "face-smile" }))
+    ),
+    h("section", { className: "relative z-10 mt-auto space-y-5 pb-20 text-[0.92rem] leading-5 text-black/86" },
+      h("p", null, "每个月，它好像都在用一种很奇怪的方式提醒你：", h("br"), "你的身体、情绪和生活，", h("br"), "其实一直在说话。"),
+      h("p", null, "这是一个关于月经关系的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点“原来不只我这样”。")
+    ),
     h("button", {
       type: "button",
       onClick: onStart,
       className: "cover-start-button",
       "aria-label": cover.cta
     },
-      h("span", { className: "cover-start-pulse", "aria-hidden": "true" })
+      h("span", { className: "cover-start-pulse" }, cover.cta)
     )
   );
 }
@@ -161,12 +194,18 @@ function QuestionPage({
   question,
   index,
   total,
-  onAnswer
+  selectedAnswer,
+  onAnswer,
+  onSelectAnswer,
+  onBack
 }: {
   question: Question;
   index: number;
   total: number;
+  selectedAnswer?: string;
   onAnswer: (question: Question, option: QuestionOption) => void;
+  onSelectAnswer: (question: Question, option: QuestionOption) => void;
+  onBack: () => void;
 }) {
   const progress = Math.round(((index + 1) / total) * 100);
   const dimensionLabel = question.dimension
@@ -175,10 +214,18 @@ function QuestionPage({
   const symbol = question.type === "hidden"
     ? hiddenSymbols[question.id] || "spark"
     : dimensionSymbols[question.dimension || ""] || "spark";
+  const isWarmup = question.id === q0.id;
+  const selectedOption = question.options.find((option) => option.id === selectedAnswer);
 
-  return h("main", { className: "flex min-h-[calc(100vh-2.5rem)] flex-col bg-white px-7 pb-8 pt-5 sm:min-h-[820px]" },
+  return h("main", { className: `question-page ${isWarmup ? "question-page-warmup" : ""} flex min-h-screen flex-col bg-white px-7 pb-8 pt-5` },
+    index > 0 && h("button", {
+      type: "button",
+      onClick: onBack,
+      className: "question-back",
+      "aria-label": "返回上一题"
+    }, "←"),
     h(PhoneStatus),
-    h("header", { className: "mt-7", "aria-label": "答题进度" },
+    h("header", { className: "question-header mt-7", "aria-label": "答题进度" },
       h("div", { className: "flex items-center justify-between text-xs font-medium text-moss" },
         h("span", null, dimensionLabel),
         h("span", null, `${index + 1}/${total}`)
@@ -190,8 +237,8 @@ function QuestionPage({
         })
       )
     ),
-    h("section", { className: "flex flex-1 flex-col justify-center pb-10" },
-      h("div", { className: "mb-7 flex items-start gap-4" },
+    h("section", { className: "question-body flex flex-1 flex-col justify-center pb-10" },
+      h("div", { className: "question-title-row mb-7 flex items-center gap-4" },
         h(Symbol, { type: symbol, className: "question-icon" }),
         h("p", { className: "font-cn text-left text-[1.08rem] leading-7 text-black" }, `${question.id}. ${question.title}`)
       ),
@@ -199,12 +246,25 @@ function QuestionPage({
         question.options.map((option) => h("button", {
           key: option.id,
           type: "button",
-          className: "question-option px-5 py-4 text-center text-[0.92rem] leading-relaxed text-black outline-none transition focus-visible:ring-4 focus-visible:ring-[#e9acd3]/50",
-          onClick: () => onAnswer(question, option)
+          className: `question-option px-5 py-4 text-center text-[0.92rem] leading-relaxed text-black outline-none transition focus-visible:ring-4 focus-visible:ring-[#9CA8B5]/35 ${selectedAnswer === option.id ? "question-option-selected" : ""}`,
+          onClick: () => isWarmup ? onSelectAnswer(question, option) : onAnswer(question, option),
+          "aria-pressed": selectedAnswer === option.id
         },
           option.text
         ))
-      )
+      ),
+      isWarmup && h("div", { className: "q0-illustration", "aria-hidden": "true" },
+        h("span", { className: "q0-spotlight" }),
+        h("span", { className: "q0-stage" }),
+        h("span", { className: "period-face q0-face" }, h("span", { className: "face-smile" })),
+        h("span", { className: "q0-bubble" })
+      ),
+      isWarmup && h("button", {
+        type: "button",
+        onClick: () => selectedOption && onAnswer(question, selectedOption),
+        disabled: !selectedOption,
+        className: "q0-next-button"
+      }, "下一页")
     )
   );
 }

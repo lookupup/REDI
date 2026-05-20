@@ -74,18 +74,17 @@ button {
     #ffffff;
 }
 
-.cover-kv {
+.new-cover {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0) 0 64%, rgba(244, 193, 231, 0.08) 74%, rgba(111, 213, 224, 0.18) 100%),
-    url("../assets/reference/poster-kv.jpg");
-  background-size: cover;
-  background-position: center center;
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.92) 0 22%, rgba(255, 255, 255, 0.18) 48%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, #ffffff 0 54%, #f7dff1 75%, #ef9ed8 89%, #69d7df 100%);
 }
 
 .cover-start-button {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+  position: relative;
+  z-index: 10;
+  width: min(280px, 100%);
+  margin-bottom: 18px;
   border: 0;
   background: transparent;
   color: #111;
@@ -94,22 +93,136 @@ button {
 }
 
 .cover-start-pulse {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(168px, 22vh, 210px);
-  display: inline-flex;
-  width: 168px;
-  height: 56px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 0 0 0 rgba(119, 216, 223, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.36);
-  transform: translateX(-50%);
-  animation: cover-start-breathe 1.8s ease-in-out infinite;
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(119, 216, 223, 0.5), 0 12px 28px rgba(61, 46, 54, 0.08);
+  animation: cover-start-breathe 1.9s ease-in-out infinite;
+}
+
+.cover-start-button:hover .cover-start-pulse {
+  opacity: 0.92;
 }
 
 .cover-start-button:focus-visible .cover-start-pulse {
-  outline: 3px solid rgba(119, 216, 223, 0.78);
+  outline: 3px solid rgba(119, 216, 223, 0.72);
   outline-offset: 5px;
+}
+
+.cover-hero-mark {
+  position: relative;
+  z-index: 1;
+  width: min(320px, 86vw);
+  height: 340px;
+  margin-top: 34px;
+}
+
+.cover-loop {
+  position: absolute;
+  left: 50%;
+  width: 132px;
+  height: 152px;
+  border: 12px solid rgba(181, 141, 214, 0.48);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 52% 48% 56% 44%;
+}
+
+.cover-loop-top {
+  top: 0;
+  transform: translateX(-50%) rotate(104deg);
+}
+
+.cover-loop-bottom {
+  bottom: 12px;
+  transform: translateX(-50%) rotate(-75deg);
+}
+
+.cover-chat {
+  position: absolute;
+  display: block;
+  width: 78px;
+  height: 42px;
+  border-radius: 18px;
+  background: #f264c5;
+}
+
+.cover-chat::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -9px;
+  border-width: 11px 5px 0 11px;
+  border-style: solid;
+  border-color: #f264c5 transparent transparent transparent;
+}
+
+.cover-chat-left {
+  left: 14px;
+  top: 92px;
+}
+
+.cover-chat-mid {
+  left: 50%;
+  top: 34px;
+  transform: translateX(-112%);
+}
+
+.cover-chat-right {
+  right: 22px;
+  bottom: 86px;
+}
+
+.period-face {
+  position: absolute;
+  display: block;
+  width: 132px;
+  height: 108px;
+  border: 5px solid #111;
+  border-radius: 92% 8% 62% 38% / 74% 8% 92% 26%;
+  background: linear-gradient(135deg, #ffdff4, #f3a9dd);
+  box-shadow: inset 42px 22px 0 rgba(255, 255, 255, 0.15);
+  transform: rotate(12deg);
+}
+
+.period-face::before,
+.period-face::after {
+  content: "";
+  position: absolute;
+  top: 49px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #111;
+}
+
+.period-face::before {
+  left: 35px;
+}
+
+.period-face::after {
+  left: 58px;
+}
+
+.cover-face {
+  left: 164px;
+  top: 78px;
+}
+
+.face-smile {
+  position: absolute;
+  left: 49px;
+  top: 69px;
+  width: 31px;
+  height: 16px;
+  border-bottom: 3px solid #111;
+  border-radius: 0 0 999px 999px;
+  transform: rotate(-18deg);
 }
 
 .phone-status-spacer {
@@ -138,12 +251,16 @@ button {
 .question-option {
   min-height: 64px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255, 246, 251, 0.98), rgba(244, 196, 231, 0.75));
+  background: linear-gradient(100deg, rgba(243, 203, 233, 0.78), rgba(126, 216, 224, 0.86));
   box-shadow: inset 0 0 0 1px rgba(200, 118, 173, 0.18), 0 10px 28px rgba(200, 118, 173, 0.12);
 }
 
 .question-option:hover {
-  background: linear-gradient(135deg, rgba(255, 243, 250, 1), rgba(119, 214, 223, 0.72));
+  opacity: 0.9;
+}
+
+.question-option-selected {
+  box-shadow: inset 0 0 0 2px rgba(156, 168, 181, 0.74), 0 10px 28px rgba(124, 151, 165, 0.14);
 }
 
 .question-icon {
@@ -152,6 +269,143 @@ button {
   flex: 0 0 auto;
   color: #d58ac0;
   filter: drop-shadow(0 8px 18px rgba(213, 138, 192, 0.2));
+}
+
+.question-page {
+  position: relative;
+  overflow-y: auto;
+}
+
+.question-back {
+  position: absolute;
+  left: 22px;
+  top: 20px;
+  z-index: 4;
+  border: 0;
+  background: transparent;
+  color: #9ca8b5;
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 0.78;
+  outline: none;
+}
+
+.question-back:hover,
+.question-back:focus-visible {
+  opacity: 1;
+}
+
+.question-header {
+  padding-left: 2px;
+}
+
+.question-title-row {
+  min-height: 74px;
+}
+
+.question-page-warmup .phone-status-spacer {
+  min-height: 72px;
+}
+
+.question-page-warmup .question-header {
+  display: none;
+}
+
+.question-page-warmup .question-body {
+  justify-content: flex-start;
+  padding-bottom: 0;
+}
+
+.question-page-warmup .question-title-row {
+  min-height: auto;
+  margin-bottom: 14px;
+}
+
+.question-page-warmup .question-icon {
+  display: none;
+}
+
+.question-page-warmup .question-option {
+  min-height: 42px;
+  padding-bottom: 0.72rem;
+  padding-top: 0.72rem;
+  font-size: 0.86rem;
+}
+
+.question-page-warmup [role="list"] {
+  gap: 10px;
+}
+
+.q0-illustration {
+  position: relative;
+  height: 214px;
+  margin: 0 auto 16px;
+  width: min(320px, 86vw);
+}
+
+.q0-spotlight {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 250px;
+  height: 198px;
+  background: linear-gradient(180deg, rgba(208, 241, 244, 0.58), rgba(255, 255, 255, 0));
+  clip-path: polygon(18% 0, 82% 0, 98% 100%, 2% 100%);
+  transform: translateX(-50%);
+}
+
+.q0-stage {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 196px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(38, 23, 36, 0.86);
+  transform: translateX(-50%);
+}
+
+.q0-face {
+  left: 50%;
+  bottom: 32px;
+  width: 112px;
+  height: 92px;
+  transform: translateX(-36%) rotate(20deg);
+}
+
+.q0-bubble {
+  position: absolute;
+  left: 74px;
+  bottom: 64px;
+  width: 58px;
+  height: 58px;
+  border: 4px solid #111;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.q0-next-button {
+  width: min(280px, 100%);
+  min-height: 54px;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 8px;
+  background: #77d8df;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+  transition: opacity 160ms ease;
+}
+
+.q0-next-button:hover,
+.q0-next-button:focus-visible {
+  opacity: 0.86;
+}
+
+.q0-next-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .result-hero {
@@ -686,12 +940,12 @@ button {
 @keyframes cover-start-breathe {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(119, 216, 223, 0.42), inset 0 0 0 1px rgba(255, 255, 255, 0.36);
-    transform: translateX(-50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(119, 216, 223, 0.42), 0 12px 28px rgba(61, 46, 54, 0.08);
+    transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 0 12px rgba(119, 216, 223, 0), inset 0 0 0 1px rgba(255, 255, 255, 0.56);
-    transform: translateX(-50%) scale(1.045);
+    box-shadow: 0 0 0 12px rgba(119, 216, 223, 0), 0 14px 32px rgba(61, 46, 54, 0.12);
+    transform: scale(1.035);
   }
 }
 
