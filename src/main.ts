@@ -152,15 +152,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
 }
 
 function PhoneStatus() {
-  return h("div", { className: "phone-status", "aria-hidden": "true" },
-    h("span", { className: "pl-5 text-[1.3rem]" }, "9:41"),
-    h("span", { className: "dynamic-island" }),
-    h("span", { className: "status-icons pr-2" },
-      h("span", null, "▮▮▮"),
-      h("span", null, "∞"),
-      h("span", { className: "battery-pill" }, "32")
-    )
-  );
+  return h("div", { className: "phone-status-spacer", "aria-hidden": "true" });
 }
 
 function QuestionPage({
