@@ -4,6 +4,7 @@ import html2canvas from "html2canvas";
 import "./styles.css";
 import { actionKitById } from "./data/actionKits";
 import { badgeById } from "./data/badges";
+import { cover } from "./data/cover";
 import { dimensions } from "./data/dimensions";
 import { mainResultById } from "./data/mainResults";
 import { formalQuestions, hiddenQuestions, q0, type Question, type QuestionOption } from "./data/questions";
@@ -139,14 +140,15 @@ function PhoneShell({ children }: { children: React.ReactNode }) {
 
 function CoverPage({ onStart }: { onStart: () => void }) {
   return h("main", {
-    className: "cover-kv relative flex min-h-[calc(100vh-2.5rem)] flex-col justify-end overflow-hidden px-7 pb-8 pt-5 sm:min-h-[820px]",
+    className: "cover-kv relative min-h-screen overflow-hidden",
   },
-    h("footer", { className: "relative z-10" },
-      h("button", {
-        type: "button",
-        onClick: onStart,
-        className: "font-chill w-full rounded-xl bg-white/95 px-5 py-4 text-[1.1rem] font-semibold text-black shadow-[0_10px_30px_rgba(189,112,173,0.28)] outline-none transition hover:text-redi focus-visible:ring-4 focus-visible:ring-white/70"
-      }, "开始测试-START")
+    h("button", {
+      type: "button",
+      onClick: onStart,
+      className: "cover-start-button",
+      "aria-label": cover.cta
+    },
+      h("span", { className: "cover-start-pulse", "aria-hidden": "true" })
     )
   );
 }
@@ -168,7 +170,7 @@ function QuestionPage({
 }) {
   const progress = Math.round(((index + 1) / total) * 100);
   const dimensionLabel = question.dimension
-    ? `${dimensions[question.dimension].name} ${dimensions[question.dimension].chineseName}`
+    ? dimensions[question.dimension].chineseName
     : question.type === "hidden" ? "隐藏题" : "暖场题｜不计分";
   const symbol = question.type === "hidden"
     ? hiddenSymbols[question.id] || "spark"
@@ -200,13 +202,10 @@ function QuestionPage({
           className: "question-option px-5 py-4 text-center text-[0.92rem] leading-relaxed text-black outline-none transition focus-visible:ring-4 focus-visible:ring-[#e9acd3]/50",
           onClick: () => onAnswer(question, option)
         },
-          h("span", { className: "font-bold" }, `${option.id}. `),
-          option.text,
-          h("span", { className: "mt-1 block text-xs text-black/65" }, `预览触发：${badgeLabel(option)}`)
+          option.text
         ))
       )
-    ),
-    h("p", { className: "font-chill rounded-xl bg-[#76d5de] px-5 py-4 text-center text-[1rem] text-black shadow-[0_12px_30px_rgba(118,213,222,0.3)]" }, "点击任意选项-NEXT PAGE")
+    )
   );
 }
 
