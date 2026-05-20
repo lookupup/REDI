@@ -1,5 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import html2canvas from "html2canvas";
 import "./styles.css";
 import { actionKitById } from "./data/actionKits";
 import { badgeById } from "./data/badges";
@@ -10,7 +11,7 @@ import { calculateResult, type Answers, type CalculatedResult } from "./lib/scor
 import { track } from "./analytics";
 
 type Page = "cover" | "quiz" | "result";
-type PopupType = "persona" | "action" | "hidden" | "save" | "share";
+type PopupType = "persona" | "action" | "hidden" | "save";
 
 type AppState = {
   page: Page;
@@ -122,7 +123,6 @@ function App() {
       activePopup: state.activePopup,
       onOpenPopup: (activePopup: PopupType) => {
         if (activePopup === "save") track("image_generated", { source: "result_page" });
-        if (activePopup === "share") track("share_clicked", { source: "result_page" });
         setState((current) => ({ ...current, activePopup }));
       },
       onClosePopup: () => setState((current) => ({ ...current, activePopup: null })),
@@ -239,6 +239,26 @@ function FinalResultPage({
   const parts = getResultParts(calculatedResult);
   const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
   const hiddenTitle = parts.badges.length > 1 ? "隐藏标签解读" : parts.badges[0]?.name || "隐藏标签解读";
+  const [showCopiedToast, setShowCopiedToast] = React.useState(false);
+  const toastTimerRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => () => {
+    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+  }, []);
+
+  const shareResult = async () => {
+    track("share_clicked", { source: "result_page" });
+
+    try {
+      await navigator.clipboard?.writeText(window.location.href);
+    } catch {
+      // Some in-app browsers block clipboard access; the toast still confirms the attempted share action.
+    }
+
+    setShowCopiedToast(true);
+    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = window.setTimeout(() => setShowCopiedToast(false), 2400);
+  };
 
   return h("main", { className: "result-page relative min-h-[calc(100vh-2.5rem)] overflow-hidden bg-white px-4 pb-7 pt-4 sm:min-h-[820px]" },
     h(PhoneStatus),
@@ -265,28 +285,33 @@ function FinalResultPage({
         h("p", { className: "border-l-4 border-white/80 pl-5 font-cn text-[1.5rem] font-semibold leading-snug text-black" }, `“${parts.persona.declaration}”`)
       )
     ),
-    h("section", { className: "relative mt-7 h-[315px]", "aria-label": "结果详情入口" },
+    h("section", { className: "relative mt-7 h-[345px]", "aria-label": "结果详情入口" },
       h(TiltCard, { className: "result-stack-card result-card-persona", label: "人格档案", onClick: () => onOpenPopup("persona") }),
       h(TiltCard, { className: "result-stack-card result-card-action", label: "经期行动小锦囊", onClick: () => onOpenPopup("action") }),
       h(TiltCard, { className: "result-stack-card result-card-hidden", label: hiddenTitle, onClick: () => onOpenPopup("hidden") })
     ),
-    h("footer", { className: "mt-2 grid grid-cols-2 gap-8 px-2" },
+    h("footer", { className: "mt-4 grid grid-cols-2 gap-8 px-2" },
       h("button", {
         type: "button",
         onClick: () => onOpenPopup("save"),
-        className: "rounded-lg bg-[#77d8df] px-4 py-4 text-sm text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
-      }, "button1：一键长图保存"),
+        className: "rounded-lg bg-[#77d8df] px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
+      }, "一键长图保存"),
       h("button", {
         type: "button",
-        onClick: () => onOpenPopup("share"),
-        className: "rounded-lg bg-[#77d8df] px-4 py-4 text-sm text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
-      }, "button2：复制链接分享")
+        onClick: shareResult,
+        className: "rounded-lg bg-[#f7a7dc] px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f7a7dc]/45"
+      }, "复制链接分享")
     ),
     h("button", {
       type: "button",
       onClick: onRestart,
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
     }, "重新测试"),
+    h("div", {
+      className: `result-toast ${showCopiedToast ? "result-toast-visible" : ""}`,
+      role: "status",
+      "aria-live": "polite"
+    }, "已复制"),
     activePopup && h(ResultPopup, { type: activePopup, parts, calculatedResult, onClose: onClosePopup })
   );
 }
@@ -314,6 +339,10 @@ function ResultPopup({
   calculatedResult: CalculatedResult;
   onClose: () => void;
 }) {
+  if (type === "save") {
+    return h(SaveImagePopup, { parts, calculatedResult, onClose });
+  }
+
   const content = popupContentFor(type, parts, calculatedResult);
 
   return h("div", { className: "result-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "result-popup-title" },
@@ -335,11 +364,93 @@ function ResultPopup({
       content.tips.length > 0 && h("ul", { className: "mt-5 space-y-2 text-left", "aria-label": "行动建议" },
         content.tips.map((tip) => h("li", { key: tip, className: "rounded-xl bg-white/58 px-4 py-3 text-sm leading-6 text-black/78" }, tip))
       ),
-      type === "save" && h("button", {
-        type: "button",
-        onClick: () => track("image_saved", { persona: calculatedResult.mainPersona.id }),
-        className: "mt-5 w-full rounded-xl bg-[#77d8df] px-4 py-3 text-sm font-semibold text-black"
-      }, "确认保存")
+    )
+  );
+}
+
+function SaveImagePopup({
+  parts,
+  calculatedResult,
+  onClose
+}: {
+  parts: ResultParts;
+  calculatedResult: CalculatedResult;
+  onClose: () => void;
+}) {
+  const captureRef = React.useRef<HTMLElement | null>(null);
+  const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
+  const badges = parts.badges.length
+    ? parts.badges
+    : [{ id: "NONE", name: "暂未触发隐藏标签", declaration: "这次没有触发额外隐藏标签。", body: ["你这次没有触发额外隐藏标签，结果会以主人格和行动锦囊为主。"] }];
+
+  const saveImage = async () => {
+    if (!captureRef.current) return;
+
+    const canvas = await html2canvas(captureRef.current, {
+      backgroundColor: "#ffffff",
+      scale: Math.min(window.devicePixelRatio || 2, 3),
+      useCORS: true
+    });
+    const url = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `REDI-${calculatedResult.personaImageKey}.png`;
+    link.click();
+    track("image_saved", { persona: calculatedResult.mainPersona.id });
+  };
+
+  return h("div", { className: "result-modal save-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "save-popup-title" },
+    h("button", { type: "button", className: "result-modal-backdrop", "aria-label": "关闭弹窗", onClick: onClose }),
+    h("div", { className: "save-popup-elements", "aria-hidden": "true" },
+      h("span", { className: "popup-face" }),
+      h("span", { className: "popup-curl popup-curl-left" }, "{"),
+      h("span", { className: "popup-curl popup-curl-right" }, "}")
+    ),
+    h("section", { className: "save-popup-shell" },
+      h("button", { type: "button", className: "result-popup-close save-popup-close", "aria-label": "关闭弹窗", onClick: onClose }, "×"),
+      h("div", { className: "save-popup-scroll" },
+        h("article", { ref: captureRef, className: "save-long-card" },
+          h("figure", { className: "save-avatar-wrap" },
+            h("img", {
+              src: personaImage,
+              alt: `${parts.persona.name}人格形象`,
+              className: "save-avatar"
+            })
+          ),
+          h("div", { className: "save-chip-row" },
+            parts.persona.tags.map((tag) => h("span", { key: tag, className: "result-chip" }, `≋ ${tag}`)),
+            calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" }, "♿ DISABILITY")
+          ),
+          h("h1", { id: "save-popup-title", className: "save-quote" }, `“${parts.persona.declaration}”`),
+          h("section", { className: "save-section" },
+            h("h2", null, "人格档案"),
+            parts.persona.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
+          ),
+          h("section", { className: "save-section" },
+            h("h2", null, "经期行动小锦囊"),
+            h("p", null, parts.actionKit.declaration),
+            parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
+            h("ul", null, parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip)))
+          ),
+          h("section", { className: "save-section" },
+            h("h2", null, "隐藏标签解读"),
+            badges.map((badge) => h("div", { key: badge.id, className: "save-badge-block" },
+              h("h3", null, badge.name),
+              h("p", null, badge.declaration),
+              badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
+            ))
+          ),
+          h("footer", { className: "save-card-footer" }, "REDI 月经人格测试 · 你的完整结果长图")
+        )
+      ),
+      h("button", { type: "button", className: "save-download-button", onClick: saveImage },
+        h("span", { className: "download-icon", "aria-hidden": "true" },
+          h("svg", { viewBox: "0 0 24 24", fill: "none" },
+            h("path", { d: "M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round" })
+          )
+        ),
+        "保存到本地"
+      )
     )
   );
 }
@@ -376,19 +487,10 @@ function popupContentFor(type: PopupType, parts: ResultParts, calculatedResult: 
     };
   }
 
-  if (type === "save") {
-    return {
-      kicker: "LONG IMAGE",
-      title: "长图保存",
-      body: ["这里会生成你的完整结果长图：包含主人格、隐藏标签、行动锦囊和分享文案。", "当前先预留保存接口，后续可接入 html2canvas 或服务端出图。"],
-      tips: [] as string[]
-    };
-  }
-
   return {
-    kicker: "SHARE",
-    title: "复制链接分享",
-    body: ["分享接口已预留，正式发布时可以接入真实分享 URL、渠道参数和复制成功提示。"],
+    kicker: "LONG IMAGE",
+    title: "长图保存",
+    body: ["这里会生成你的完整结果长图：包含主人格、隐藏标签、行动锦囊和分享文案。"],
     tips: [] as string[]
   };
 }

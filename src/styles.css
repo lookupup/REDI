@@ -255,10 +255,10 @@ button {
   position: absolute;
   left: 12px;
   right: 12px;
-  height: 170px;
+  height: 158px;
   border: 0;
   border-radius: 14px;
-  padding: 28px 22px;
+  padding: 0;
   text-align: left;
   color: #111;
   outline: none;
@@ -278,13 +278,24 @@ button {
 }
 
 .result-stack-card span {
-  font-size: 14px;
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  display: block;
+  width: fit-content;
+  max-width: 72%;
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: 1.18rem;
+  font-weight: 500;
   line-height: 1.35;
+  color: #111;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .result-card-persona {
   --tilt: -6deg;
-  top: 10px;
+  top: 12px;
   z-index: 1;
   background: linear-gradient(110deg, #f9def2 0%, #dbedf6 78%, #c9f3f6 100%);
   transform: rotate(var(--tilt));
@@ -292,7 +303,7 @@ button {
 
 .result-card-action {
   --tilt: 6deg;
-  top: 95px;
+  top: 98px;
   z-index: 2;
   background: rgba(176, 201, 230, 0.82);
   transform: rotate(var(--tilt));
@@ -300,7 +311,7 @@ button {
 
 .result-card-hidden {
   --tilt: -4deg;
-  top: 160px;
+  top: 170px;
   z-index: 3;
   background: var(--pink);
   transform: rotate(var(--tilt));
@@ -353,6 +364,207 @@ button {
   z-index: 3;
   width: min(430px, 100vw);
   height: min(640px, 80vh);
+  pointer-events: none;
+}
+
+.result-toast {
+  position: fixed;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  z-index: 6;
+  min-width: 108px;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.88);
+  padding: 10px 18px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.result-toast-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.save-modal {
+  align-items: stretch;
+  padding: 38px 20px;
+}
+
+.save-popup-shell {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: min(372px, 88vw);
+  max-height: min(820px, calc(100vh - 76px));
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 34px;
+  background: #fff;
+  animation: save-popup-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.save-popup-close {
+  z-index: 5;
+  right: 18px;
+  top: 14px;
+}
+
+.save-popup-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 28px 26px 18px;
+}
+
+.save-long-card {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 0% 48%, rgba(247, 198, 233, 0.42) 0 15%, rgba(247, 198, 233, 0) 30%),
+    radial-gradient(circle at 100% 42%, rgba(119, 216, 223, 0.36) 0 16%, rgba(119, 216, 223, 0) 30%),
+    #ffffff;
+  color: #111;
+  padding: 0 0 18px;
+}
+
+.save-avatar-wrap {
+  margin: 0 auto;
+  display: flex;
+  height: 128px;
+  width: 128px;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fbf0ed;
+}
+
+.save-avatar {
+  height: 116px;
+  width: 116px;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.save-chip-row {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+}
+
+.save-quote {
+  margin-top: 22px;
+  border-left: 4px solid #dcdcdc;
+  padding-left: 18px;
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.28;
+  text-align: left;
+}
+
+.save-section {
+  margin-top: 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(253, 227, 244, 0.72), rgba(205, 244, 247, 0.72));
+  padding: 22px 20px;
+  text-align: left;
+}
+
+.save-section h2 {
+  margin: 0 0 18px;
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.save-section h3 {
+  margin: 18px 0 8px;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.save-section h3:first-child {
+  margin-top: 0;
+}
+
+.save-section p,
+.save-section li {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.save-section p + p {
+  margin-top: 10px;
+}
+
+.save-section ul {
+  margin-top: 12px;
+  padding-left: 1.1rem;
+}
+
+.save-section li + li {
+  margin-top: 8px;
+}
+
+.save-badge-block + .save-badge-block {
+  margin-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  padding-top: 18px;
+}
+
+.save-card-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(0, 0, 0, 0.42);
+}
+
+.save-download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 26px 24px;
+  border-radius: 14px;
+  background: #77d8df;
+  padding: 14px 16px;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #111;
+  outline: none;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.save-download-button:hover,
+.save-download-button:focus-visible {
+  filter: brightness(1.03);
+  transform: translateY(-2px);
+}
+
+.download-icon {
+  display: inline-flex;
+  height: 21px;
+  width: 21px;
+}
+
+.download-icon svg {
+  height: 100%;
+  width: 100%;
+}
+
+.save-popup-elements {
+  position: absolute;
+  z-index: 3;
+  width: min(430px, 100vw);
+  height: min(780px, 92vh);
   pointer-events: none;
 }
 
@@ -461,6 +673,17 @@ button {
   to {
     opacity: 1;
     transform: translateY(0) rotate(6deg) scale(1);
+  }
+}
+
+@keyframes save-popup-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
