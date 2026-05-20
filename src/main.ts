@@ -132,8 +132,8 @@ function App() {
 }
 
 function PhoneShell({ children }: { children: React.ReactNode }) {
-  return h("div", { className: "min-h-screen w-full bg-[#d4d4d4] px-4 py-5 sm:py-8" },
-    h("div", { className: "mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[430px] overflow-hidden bg-white shadow-soft sm:min-h-[820px]" }, children)
+  return h("div", { className: "min-h-screen w-full bg-white" },
+    h("div", { className: "min-h-screen w-full overflow-hidden bg-white" }, children)
   );
 }
 

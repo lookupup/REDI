@@ -24,14 +24,21 @@
 
 html {
   color-scheme: light;
+  background: #ffffff;
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  background: #ffffff;
   font-family: "Gopher", "ChillDIN", "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+  background: #ffffff;
 }
 
 button {
@@ -76,7 +83,7 @@ button {
 }
 
 .phone-status-spacer {
-  min-height: 34px;
+  min-height: 14px;
 }
 
 .cover-visual {
