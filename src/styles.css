@@ -917,8 +917,27 @@ button {
   margin-top: 22px;
 }
 
+.save-section-action {
+  margin-top: 18px;
+}
+
+.save-badge-heading {
+  margin-top: 18px;
+  border-radius: 16px 16px 8px 8px;
+  background: linear-gradient(135deg, rgba(253, 227, 244, 0.58), rgba(205, 244, 247, 0.58));
+  padding: 14px 20px 12px;
+  text-align: left;
+}
+
 .save-section h2 {
   margin: 0 0 18px;
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: 1.06rem;
+  font-weight: 800;
+}
+
+.save-badge-heading h2 {
+  margin: 0;
   font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
   font-size: 1.06rem;
   font-weight: 800;
@@ -951,7 +970,7 @@ button {
 }
 
 .save-badge-card {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .save-card-footer {

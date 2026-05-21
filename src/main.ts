@@ -573,17 +573,17 @@ function SaveImagePopup({
             calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" }, "♿ DISABILITY")
           ),
           h("h1", { id: "save-popup-title", className: "save-quote" }, `“${parts.persona.declaration}”`),
-          h("section", { className: "save-section" },
+          h("section", { className: "save-section save-section-persona" },
             h("h2", null, "人格档案"),
             parts.persona.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
           ),
-          h("section", { className: "save-section" },
+          h("section", { className: "save-section save-section-action" },
             h("h2", null, "经期行动小锦囊"),
             h("p", null, parts.actionKit.declaration),
             parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
             h("ul", null, parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip)))
           ),
-          h("section", { className: "save-section" },
+          h("section", { className: "save-badge-heading" },
             h("h2", null, "特别勋章解读"),
           ),
           badges.map((badge) => h("section", { key: badge.id, className: "save-section save-badge-card" },
