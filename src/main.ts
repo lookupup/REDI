@@ -236,7 +236,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       h("img", { src: coverStartButtonImage, alt: "", className: "cover-start-image" })
     ),
     h("section", { className: "cover-copy relative z-10 text-black/82" },
-      h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；", h("br"), "有时声势浩大，有时安静路过；", h("br"), "有时给你带来能量，有时让你只想躺平。"),
+      h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；", h("br"), "有时给你带来能量，有时让你只想躺平。"),
       h("p", null, "你的身体，一直有话说。"),
       h("p", null, "这是一个关于你的“月经人格”的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点\"原来不只我这样\"。")
     )
