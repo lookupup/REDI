@@ -31,6 +31,7 @@ const h = React.createElement;
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
 const homePadImage = new URL("../assets/reference/home-pad.png", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
+const startButtonImage = new URL("../assets/reference/start-button.png", import.meta.url).toString();
 
 const initialState: AppState = {
   page: "cover",
@@ -167,17 +168,18 @@ function CoverPage({ onStart }: { onStart: () => void }) {
     h("section", { className: "cover-hero-mark", "aria-hidden": "true" },
       h("img", { src: homePadImage, alt: "", className: "cover-hero-image" })
     ),
-    h("section", { className: "relative z-10 mt-5 space-y-5 pb-8 text-[0.92rem] leading-5 text-black/86" },
-      h("p", null, "每个月，它好像都在用一种很奇怪的方式提醒你：", h("br"), "你的身体、情绪和生活，", h("br"), "其实一直在说话。"),
-      h("p", null, "这是一个关于月经关系的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点“原来不只我这样”。")
-    ),
     h("button", {
       type: "button",
       onClick: onStart,
       className: "cover-start-button",
       "aria-label": cover.cta
     },
-      h("span", { className: "cover-start-pulse" }, cover.cta)
+      h("img", { src: startButtonImage, alt: "", className: "cover-start-image" })
+    ),
+    h("section", { className: "cover-copy relative z-10 text-black/82" },
+      h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；有时声势浩大，有时安静路过；", h("br"), "有时给你带来能量，有时让你只想躺平。"),
+      h("p", null, "你的身体，一直有话说。"),
+      h("p", null, "这是一个关于你的“月经人格”的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点\"原来不只我这样\"。")
     )
   );
 }
@@ -274,11 +276,11 @@ function FinalResultPage({
   const parts = getResultParts(calculatedResult);
   const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
   const hiddenTitle = parts.badges.length > 1 ? "隐藏标签解读" : parts.badges[0]?.name || "隐藏标签解读";
-  const [showCopiedToast, setShowCopiedToast] = React.useState(false);
-  const toastTimerRef = React.useRef<number | null>(null);
+  const [showCopiedFeedback, setShowCopiedFeedback] = React.useState(false);
+  const copiedTimerRef = React.useRef<number | null>(null);
 
   React.useEffect(() => () => {
-    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+    if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
   }, []);
 
   const shareResult = async () => {
@@ -290,9 +292,9 @@ function FinalResultPage({
       // Some in-app browsers block clipboard access; the toast still confirms the attempted share action.
     }
 
-    setShowCopiedToast(true);
-    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
-    toastTimerRef.current = window.setTimeout(() => setShowCopiedToast(false), 2400);
+    setShowCopiedFeedback(true);
+    if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
+    copiedTimerRef.current = window.setTimeout(() => setShowCopiedFeedback(false), 3000);
   };
 
   return h("main", { className: "result-page relative min-h-screen overflow-y-auto bg-white px-4 pb-7 pt-4" },
@@ -334,19 +336,15 @@ function FinalResultPage({
       h("button", {
         type: "button",
         onClick: shareResult,
-        className: "rounded-lg bg-[#f7a7dc] px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f7a7dc]/45"
-      }, "复制链接分享")
+        style: { backgroundColor: showCopiedFeedback ? "#f264c5" : "#f7a7dc" },
+        className: `result-share-button rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f264c5]/45 ${showCopiedFeedback ? "result-share-button-copied" : ""}`
+      }, showCopiedFeedback ? "☑️已复制" : "复制链接分享")
     ),
     h("button", {
       type: "button",
       onClick: onRestart,
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
     }, "重新测试"),
-    h("div", {
-      className: `result-toast ${showCopiedToast ? "result-toast-visible" : ""}`,
-      role: "status",
-      "aria-live": "polite"
-    }, "已复制"),
     activePopup && h(ResultPopup, { type: activePopup, parts, calculatedResult, onClose: onClosePopup })
   );
 }
