@@ -236,7 +236,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       h("img", { src: coverStartButtonImage, alt: "", className: "cover-start-image" })
     ),
     h("section", { className: "cover-copy relative z-10 text-black/82" },
-      h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；有时声势浩大，有时安静路过；", h("br"), "有时给你带来能量，有时让你只想躺平。"),
+      h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；", h("br"), "有时声势浩大，有时安静路过；", h("br"), "有时给你带来能量，有时让你只想躺平。"),
       h("p", null, "你的身体，一直有话说。"),
       h("p", null, "这是一个关于你的“月经人格”的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点\"原来不只我这样\"。")
     )
@@ -551,7 +551,6 @@ function SaveImagePopup({
   return h("div", { className: "result-modal save-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "save-popup-title" },
     h("button", { type: "button", className: "result-modal-backdrop", "aria-label": "关闭弹窗", onClick: onClose }),
     h("div", { className: "save-popup-elements", "aria-hidden": "true" },
-      h("span", { className: "popup-face" }),
       h("span", { className: "popup-curl popup-curl-left" }, "{"),
       h("span", { className: "popup-curl popup-curl-right" }, "}")
     ),
