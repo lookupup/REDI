@@ -1031,11 +1031,11 @@ button {
 }
 
 .popup-face {
-  left: 12px;
-  top: 112px;
-  width: 112px;
-  height: 88px;
-  border: 5px solid #111;
+  left: 86px;
+  top: 128px;
+  width: 72px;
+  height: 56px;
+  border: 4px solid #111;
   border-radius: 92% 8% 62% 38% / 74% 8% 92% 26%;
   background: linear-gradient(135deg, #ffd8f2, #f5a9dc);
   transform: rotate(12deg);
@@ -1045,23 +1045,23 @@ button {
 .popup-face::after {
   content: "";
   position: absolute;
-  top: 36px;
-  width: 11px;
-  height: 11px;
+  top: 23px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #111;
 }
 
 .popup-face::before {
-  left: 22px;
+  left: 14px;
 }
 
 .popup-face::after {
-  left: 44px;
+  left: 29px;
 }
 
 .popup-face {
-  box-shadow: inset 36px 20px 0 rgba(255, 255, 255, 0.18);
+  box-shadow: inset 23px 13px 0 rgba(255, 255, 255, 0.18);
 }
 
 .popup-bubble {
