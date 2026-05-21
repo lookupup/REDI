@@ -160,18 +160,28 @@ function CoverPage({ onStart }: { onStart: () => void }) {
     className: "new-cover relative flex min-h-screen flex-col items-center overflow-hidden px-9 pb-9 pt-[17vh] text-center",
   },
     h("section", { className: "relative z-10" },
-      h("h1", { className: "font-en text-[1.82rem] font-bold leading-tight text-black" }, "REDI：测测你的月经人格"),
-      h("p", { className: "mt-3 font-cn text-[1.32rem] leading-tight text-black/82" }, "你的月经，比MBTI更懂你")
+      h("h1", { className: "text-[1.82rem] font-bold leading-tight text-black" },
+        h("span", { className: "font-en" }, "REDI："),
+        h("span", { className: "font-cn" }, "测测你的月经人格")
+      ),
+      h("p", { className: "mt-3 text-[1.32rem] leading-tight text-black/82" },
+        h("span", { className: "font-cn" }, "你的月经，比"),
+        h("span", { className: "font-en" }, "MBTI"),
+        h("span", { className: "font-cn" }, "更懂你")
+      )
     ),
     h("section", { className: "cover-hero-mark", "aria-hidden": "true" },
-      h("span", { className: "cover-loop cover-loop-top" }),
-      h("span", { className: "cover-loop cover-loop-bottom" }),
+      h("span", { className: "cover-pad-symbol" },
+        h("span", { className: "cover-pad-core" }),
+        h("span", { className: "cover-pad-tail cover-pad-tail-top" }),
+        h("span", { className: "cover-pad-tail cover-pad-tail-bottom" })
+      ),
       h("span", { className: "cover-chat cover-chat-left" }),
       h("span", { className: "cover-chat cover-chat-mid" }),
       h("span", { className: "cover-chat cover-chat-right" }),
       h("span", { className: "period-face cover-face" }, h("span", { className: "face-smile" }))
     ),
-    h("section", { className: "relative z-10 mt-auto space-y-5 pb-20 text-[0.92rem] leading-5 text-black/86" },
+    h("section", { className: "relative z-10 mt-5 space-y-5 pb-8 text-[0.92rem] leading-5 text-black/86" },
       h("p", null, "每个月，它好像都在用一种很奇怪的方式提醒你：", h("br"), "你的身体、情绪和生活，", h("br"), "其实一直在说话。"),
       h("p", null, "这是一个关于月经关系的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点“原来不只我这样”。")
     ),
@@ -311,9 +321,9 @@ function FinalResultPage({
     toastTimerRef.current = window.setTimeout(() => setShowCopiedToast(false), 2400);
   };
 
-  return h("main", { className: "result-page relative min-h-[calc(100vh-2.5rem)] overflow-hidden bg-white px-4 pb-7 pt-4 sm:min-h-[820px]" },
+  return h("main", { className: "result-page relative min-h-screen overflow-y-auto bg-white px-4 pb-7 pt-4" },
     h(PhoneStatus),
-    h("section", { className: "relative px-2 pt-6 text-center" },
+    h("section", { className: "relative mx-auto max-w-[430px] px-2 pt-6 text-center" },
       h("h1", { className: "font-cn text-[1.65rem] font-semibold text-black" }, "测试结果"),
       h("div", { className: "result-key-elements", "aria-hidden": "true" },
         h("span", { className: "result-pill result-pill-left" }, "✦"),
@@ -321,27 +331,27 @@ function FinalResultPage({
         h("span", { className: "result-squiggle result-squiggle-right" }, "{"),
         h("span", { className: "result-bubble" })
       ),
-      h("figure", { className: "mx-auto mt-6 flex h-[210px] w-[210px] items-end justify-center rounded-full bg-[#fbf0ed]" },
+      h("figure", { className: "mx-auto mt-5 flex h-[184px] w-[184px] items-end justify-center rounded-full bg-[#fbf0ed]" },
         h("img", {
           src: personaImage,
           alt: `${parts.persona.name}人格形象`,
-          className: "h-[190px] w-[190px] object-contain object-bottom"
+          className: "h-[166px] w-[166px] object-contain object-bottom"
         })
       ),
       h("div", { className: "mt-5 flex flex-wrap justify-center gap-2" },
         parts.persona.tags.map((tag) => h("span", { key: tag, className: "result-chip" }, `≋ ${tag}`)),
         calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" }, "♿ DISABILITY")
       ),
-      h("blockquote", { className: "mx-auto mt-5 max-w-[385px] rounded-2xl bg-gradient-to-r from-[#fde3f4] to-[#cdf4f7] px-7 py-5 text-left" },
+      h("blockquote", { className: "mx-auto mt-5 max-w-[405px] rounded-2xl bg-gradient-to-r from-[#fde3f4] to-[#cdf4f7] px-7 py-5 text-left" },
         h("p", { className: "border-l-4 border-white/80 pl-5 font-cn text-[1.5rem] font-semibold leading-snug text-black" }, `“${parts.persona.declaration}”`)
       )
     ),
-    h("section", { className: "relative mt-7 h-[345px]", "aria-label": "结果详情入口" },
+    h("section", { className: "relative mx-auto mt-5 h-[300px] max-w-[410px]", "aria-label": "结果详情入口" },
       h(TiltCard, { className: "result-stack-card result-card-persona", label: "人格档案", onClick: () => onOpenPopup("persona") }),
       h(TiltCard, { className: "result-stack-card result-card-action", label: "经期行动小锦囊", onClick: () => onOpenPopup("action") }),
       h(TiltCard, { className: "result-stack-card result-card-hidden", label: hiddenTitle, onClick: () => onOpenPopup("hidden") })
     ),
-    h("footer", { className: "mt-4 grid grid-cols-2 gap-8 px-2" },
+    h("footer", { className: "mx-auto mt-2 grid max-w-[410px] grid-cols-2 gap-6 px-3" },
       h("button", {
         type: "button",
         onClick: () => onOpenPopup("save"),
