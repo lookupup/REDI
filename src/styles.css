@@ -850,10 +850,10 @@ button {
 .save-long-card::before {
   content: "";
   position: absolute;
-  inset: 110px -54px auto -54px;
-  height: 640px;
-  background: url("../assets/reference/pad-watermark.png") center top / contain no-repeat;
-  opacity: 0.12;
+  inset: auto -58px 72px -58px;
+  height: min(620px, 76%);
+  background: url("../assets/reference/pad-watermark-bottom.png") center bottom / contain no-repeat;
+  opacity: 0.13;
   pointer-events: none;
 }
 
@@ -1053,19 +1053,21 @@ button {
 .popup-curl {
   color: #67dce6;
   font-family: serif;
-  font-size: 62px;
+  font-size: 66px;
   line-height: 1;
   animation-delay: 120ms;
 }
 
 .popup-curl-left {
-  left: 48px;
-  bottom: 56px;
+  left: 28px;
+  bottom: -10px;
+  transform: rotate(24deg);
 }
 
 .popup-curl-right {
-  right: 26px;
-  top: 128px;
+  right: 18px;
+  top: -10px;
+  transform: rotate(-24deg);
 }
 
 .popup-spark {
