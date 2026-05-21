@@ -761,6 +761,11 @@ button {
   font-size: 1rem;
 }
 
+.result-popup-badge-title {
+  font-weight: 800;
+  color: #111;
+}
+
 .result-popup-close {
   position: absolute;
   right: 16px;
@@ -850,10 +855,10 @@ button {
 .save-long-card::before {
   content: "";
   position: absolute;
-  inset: auto -58px 72px -58px;
-  height: min(620px, 76%);
-  background: url("../assets/reference/pad-watermark-bottom.png") center bottom / contain no-repeat;
-  opacity: 0.13;
+  inset: 38% -54px auto -54px;
+  height: min(760px, 58%);
+  background: url("../assets/reference/pad-watermark-bottom.png") center top / contain no-repeat;
+  opacity: 0.18;
   pointer-events: none;
 }
 
@@ -901,28 +906,28 @@ button {
 }
 
 .save-section {
-  margin-top: 24px;
+  margin-top: 12px;
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(253, 227, 244, 0.72), rgba(205, 244, 247, 0.72));
   padding: 22px 20px;
   text-align: left;
 }
 
+.save-quote + .save-section {
+  margin-top: 22px;
+}
+
 .save-section h2 {
   margin: 0 0 18px;
   font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
   font-size: 1.06rem;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .save-section h3 {
-  margin: 18px 0 8px;
+  margin: 0 0 10px;
   font-size: 1.02rem;
-  font-weight: 700;
-}
-
-.save-section h3:first-child {
-  margin-top: 0;
+  font-weight: 800;
 }
 
 .save-section p,
@@ -945,10 +950,8 @@ button {
   margin-top: 8px;
 }
 
-.save-badge-block + .save-badge-block {
-  margin-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.72);
-  padding-top: 18px;
+.save-badge-card {
+  margin-top: 10px;
 }
 
 .save-card-footer {

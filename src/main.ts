@@ -508,7 +508,10 @@ function ResultPopup({
       h("p", { className: "text-xs font-bold tracking-[0.16em] text-black/50" }, content.kicker),
       h("h2", { id: "result-popup-title", className: "font-cn mt-2 text-[1.35rem] font-semibold text-black" }, content.title),
       h("div", { className: "mt-5 space-y-3 text-left text-[0.94rem] leading-7 text-black/78" },
-        content.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
+        content.body.map((paragraph) => {
+          const isBadgeTitle = type === "hidden" && parts.badges.some((badge) => badge.name === paragraph);
+          return h("p", { key: paragraph, className: isBadgeTitle ? "result-popup-badge-title" : undefined }, paragraph);
+        })
       ),
       content.tips.length > 0 && h("ul", { className: "mt-5 space-y-2 text-left", "aria-label": "行动建议" },
         content.tips.map((tip) => h("li", { key: tip, className: "rounded-xl bg-white/58 px-4 py-3 text-sm leading-6 text-black/78" }, tip))
@@ -582,12 +585,12 @@ function SaveImagePopup({
           ),
           h("section", { className: "save-section" },
             h("h2", null, "特别勋章解读"),
-            badges.map((badge) => h("div", { key: badge.id, className: "save-badge-block" },
+          ),
+          badges.map((badge) => h("section", { key: badge.id, className: "save-section save-badge-card" },
               h("h3", null, badge.name),
               h("p", null, badge.declaration),
               badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
-            ))
-          ),
+          )),
           h("footer", { className: "save-card-footer" }, "REDI 月经人格测试 · 你的完整结果长图")
         )
       ),
