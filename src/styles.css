@@ -369,10 +369,10 @@ button {
 }
 
 .result-avatar {
-  width: 136%;
-  height: 136%;
+  width: 124%;
+  height: 124%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
 }
 
 .result-page {
@@ -875,10 +875,10 @@ button {
 }
 
 .save-avatar {
-  height: 136%;
-  width: 136%;
+  height: 124%;
+  width: 124%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
 }
 
 .save-chip-row {
