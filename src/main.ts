@@ -33,7 +33,8 @@ const h = React.createElement;
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
 const homePadImage = new URL("../assets/reference/home-pad-labeled.png", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
-const specialResultImage = new URL("../assets/reference/aef-result.png", import.meta.url).toString();
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const specialResultImage = publicAsset("images/personas/common.png");
 const coverStartButtonImage = new URL("../assets/reference/cover-start-button.png", import.meta.url).toString();
 
 const initialState: AppState = {
@@ -69,14 +70,23 @@ const specialResults: Record<SpecialResultId, { name: string; englishName: strin
 };
 
 const personaImages: Record<string, string> = {
-  STAR: new URL("../assets/personas/cutouts/star.png", import.meta.url).toString(),
-  WILD: new URL("../assets/personas/cutouts/wild.png", import.meta.url).toString(),
-  COACH: new URL("../assets/personas/cutouts/coach.png", import.meta.url).toString(),
-  NEWS: new URL("../assets/personas/cutouts/news.png", import.meta.url).toString(),
-  INVISIBLE: new URL("../assets/personas/cutouts/invisible.png", import.meta.url).toString(),
-  SURPRISE: new URL("../assets/personas/cutouts/surprise.png", import.meta.url).toString(),
-  ASSASSIN: new URL("../assets/personas/cutouts/assassin.png", import.meta.url).toString(),
-  OWL: new URL("../assets/personas/cutouts/owl.png", import.meta.url).toString()
+  STAR: publicAsset("images/personas/STAR.png"),
+  STAR_HARD: publicAsset("images/personas/STAR_HARD.png"),
+  WILD: publicAsset("images/personas/WILD.png"),
+  WILD_HARD: publicAsset("images/personas/WILD_HARD.png"),
+  COACH: publicAsset("images/personas/COACH.png"),
+  COACH_HARD: publicAsset("images/personas/COACH_HARD.png"),
+  NEWS: publicAsset("images/personas/NEWS.png"),
+  NEWS_HARD: publicAsset("images/personas/NEWS_HARD.png"),
+  INVISIBLE: publicAsset("images/personas/INVISIBLE.png"),
+  INVISIBLE_HARD: publicAsset("images/personas/INVISIBLE_HARD.png"),
+  // TODO: Confirm whether the project persona id SURPRISE should permanently use the RANGER image assets.
+  SURPRISE: publicAsset("images/personas/RANGER.png"),
+  SURPRISE_HARD: publicAsset("images/personas/RANGER_HARD.png"),
+  ASSASSIN: publicAsset("images/personas/ASSASSIN.png"),
+  ASSASSIN_HARD: publicAsset("images/personas/ASSASSIN_HARD.png"),
+  OWL: publicAsset("images/personas/OWL.png"),
+  OWL_HARD: publicAsset("images/personas/OWL_HARD.png")
 };
 
 const dimensionSymbols: Record<string, string> = {
@@ -393,7 +403,7 @@ function FinalResultPage({
   onRestart: () => void;
 }) {
   const parts = getResultParts(calculatedResult);
-  const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
+  const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
   const hiddenTitle = parts.badges.length > 1 ? "特别勋章解读" : parts.badges[0]?.name || "特别勋章解读";
   const { showCopiedFeedback, shareResult } = useShareFeedback();
 
@@ -407,11 +417,11 @@ function FinalResultPage({
         h("span", { className: "result-squiggle result-squiggle-right" }, "{"),
         h("span", { className: "result-bubble" })
       ),
-      h("figure", { className: "mx-auto mt-5 flex h-[184px] w-[184px] items-end justify-center rounded-full bg-[#fbf0ed]" },
+      h("figure", { className: "result-avatar-wrap mx-auto mt-5 flex h-[184px] w-[184px] items-center justify-center rounded-full bg-[#fbf0ed]" },
         h("img", {
           src: personaImage,
           alt: `${parts.persona.name}人格形象`,
-          className: "h-[166px] w-[166px] object-contain object-bottom"
+          className: "result-avatar"
         })
       ),
       h("div", { className: "mt-5 flex flex-wrap justify-center gap-2" },
@@ -422,7 +432,7 @@ function FinalResultPage({
         h("p", { className: "border-l-4 border-white/80 pl-5 font-cn text-[1.5rem] font-semibold leading-snug text-black" }, `“${parts.persona.declaration}”`)
       )
     ),
-    h("section", { className: "relative mx-auto mt-5 h-[300px] max-w-[430px]", "aria-label": "结果详情入口" },
+    h("section", { className: "relative mx-auto mt-5 h-[285px] max-w-[430px]", "aria-label": "结果详情入口" },
       h(TiltCard, { className: "result-stack-card result-card-persona", label: "人格档案", onClick: () => onOpenPopup("persona") }),
       h(TiltCard, { className: "result-stack-card result-card-action", label: "经期行动小锦囊", onClick: () => onOpenPopup("action") }),
       h(TiltCard, { className: "result-stack-card result-card-hidden", label: hiddenTitle, onClick: () => onOpenPopup("hidden") })
@@ -510,7 +520,7 @@ function SaveImagePopup({
   onClose: () => void;
 }) {
   const captureRef = React.useRef<HTMLElement | null>(null);
-  const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
+  const personaImage = personaImages[calculatedResult.personaImageKey] || personaImages[parts.persona.id] || personaImages.STAR;
   const badges = parts.badges.length
     ? parts.badges
     : [{ id: "NONE", name: "暂未触发特别勋章", declaration: "这次没有触发额外特别勋章。", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];

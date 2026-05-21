@@ -365,6 +365,17 @@ button {
   filter: drop-shadow(0 22px 26px rgba(129, 78, 50, 0.18));
 }
 
+.result-avatar-wrap {
+  overflow: hidden;
+}
+
+.result-avatar {
+  width: 136%;
+  height: 136%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .result-page {
   --pink: #f7c6e9;
   --hot-pink: #f264c5;
@@ -531,7 +542,7 @@ button {
   position: absolute;
   left: 8px;
   right: 8px;
-  height: 142px;
+  height: 96px;
   border: 0;
   border-radius: 14px;
   padding: 0;
@@ -556,7 +567,7 @@ button {
 .result-stack-card span {
   position: absolute;
   left: 28px;
-  top: 25px;
+  top: 16px;
   display: block;
   width: fit-content;
   max-width: 72%;
@@ -571,7 +582,7 @@ button {
 
 .result-card-persona {
   --tilt: -6deg;
-  top: 8px;
+  top: 0;
   z-index: 1;
   background: linear-gradient(110deg, #f9def2 0%, #dbedf6 78%, #c9f3f6 100%);
   transform: rotate(var(--tilt));
@@ -579,7 +590,7 @@ button {
 
 .result-card-action {
   --tilt: 6deg;
-  top: 84px;
+  top: 82px;
   z-index: 2;
   background: rgba(176, 201, 230, 0.82);
   transform: rotate(var(--tilt));
@@ -587,7 +598,7 @@ button {
 
 .result-card-hidden {
   --tilt: -4deg;
-  top: 145px;
+  top: 158px;
   z-index: 3;
   background: var(--pink);
   transform: rotate(var(--tilt));
@@ -743,13 +754,14 @@ button {
   justify-content: center;
   border-radius: 999px;
   background: #fbf0ed;
+  overflow: hidden;
 }
 
 .save-avatar {
-  height: 116px;
-  width: 116px;
-  object-fit: contain;
-  object-position: bottom;
+  height: 136%;
+  width: 136%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .save-chip-row {
