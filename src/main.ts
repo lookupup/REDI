@@ -275,7 +275,7 @@ function FinalResultPage({
 }) {
   const parts = getResultParts(calculatedResult);
   const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
-  const hiddenTitle = parts.badges.length > 1 ? "隐藏标签解读" : parts.badges[0]?.name || "隐藏标签解读";
+  const hiddenTitle = parts.badges.length > 1 ? "特别勋章解读" : parts.badges[0]?.name || "特别勋章解读";
   const [showCopiedFeedback, setShowCopiedFeedback] = React.useState(false);
   const copiedTimerRef = React.useRef<number | null>(null);
 
@@ -414,7 +414,7 @@ function SaveImagePopup({
   const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
   const badges = parts.badges.length
     ? parts.badges
-    : [{ id: "NONE", name: "暂未触发隐藏标签", declaration: "这次没有触发额外隐藏标签。", body: ["你这次没有触发额外隐藏标签，结果会以主人格和行动锦囊为主。"] }];
+    : [{ id: "NONE", name: "暂未触发特别勋章", declaration: "这次没有触发额外特别勋章。", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
 
   const saveImage = async () => {
     if (!captureRef.current) return;
@@ -466,7 +466,7 @@ function SaveImagePopup({
             h("ul", null, parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip)))
           ),
           h("section", { className: "save-section" },
-            h("h2", null, "隐藏标签解读"),
+            h("h2", null, "特别勋章解读"),
             badges.map((badge) => h("div", { key: badge.id, className: "save-badge-block" },
               h("h3", null, badge.name),
               h("p", null, badge.declaration),
@@ -510,11 +510,11 @@ function popupContentFor(type: PopupType, parts: ResultParts, calculatedResult: 
   if (type === "hidden") {
     const badges = parts.badges.length
       ? parts.badges
-      : [{ id: "NONE", name: "暂未触发隐藏标签", body: ["你这次没有触发额外隐藏标签，结果会以主人格和行动锦囊为主。"] }];
+      : [{ id: "NONE", name: "暂未触发特别勋章", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
 
     return {
       kicker: badges.map((badge) => badge.id).join(" / "),
-      title: "隐藏标签解读",
+      title: "特别勋章解读",
       body: badges.flatMap((badge) => [badge.name, ...badge.body.slice(0, 2)]),
       tips: [] as string[]
     };
@@ -523,7 +523,7 @@ function popupContentFor(type: PopupType, parts: ResultParts, calculatedResult: 
   return {
     kicker: "LONG IMAGE",
     title: "长图保存",
-    body: ["这里会生成你的完整结果长图：包含主人格、隐藏标签、行动锦囊和分享文案。"],
+    body: ["这里会生成你的完整结果长图：包含主人格、特别勋章、行动锦囊和分享文案。"],
     tips: [] as string[]
   };
 }
