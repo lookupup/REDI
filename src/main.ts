@@ -271,12 +271,6 @@ function QuestionPage({
   const isWarmup = question.id === q0.id;
 
   return h("main", { className: `question-page ${isWarmup ? "question-page-warmup" : ""} flex flex-col bg-white px-7 pb-8 pt-5` },
-    index > 0 && h("button", {
-      type: "button",
-      onClick: onBack,
-      className: "question-back",
-      "aria-label": "返回上一题"
-    }, "←"),
     h(PhoneStatus),
     h("header", { className: "question-header mt-7", "aria-label": "答题进度" },
       h("div", { className: "flex items-center justify-between text-xs font-medium text-moss" },
@@ -306,6 +300,12 @@ function QuestionPage({
           option.text
         ))
       ),
+      index > 0 && h("button", {
+        type: "button",
+        onClick: onBack,
+        className: "question-back",
+        "aria-label": "返回上一题"
+      }, "← 返回上一题"),
       isWarmup && h("div", { className: "q0-illustration", "aria-hidden": "true" },
         h("img", { src: q0DropImage, alt: "", className: "q0-drop-image" })
       )
