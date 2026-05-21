@@ -39,9 +39,9 @@ export const mainResults = [
     ]
   },
   {
-    id: "NEWS",
+    id: "AIRDROP",
     name: "战地记者",
-    englishName: "NEWS",
+    englishName: "AIRDROP",
     declaration: "突然空降到混乱现场，我只能硬扛着记录一切。",
     tags: ["存在感强", "带疲惫", "不规律"],
     body: [
@@ -114,7 +114,7 @@ export const perPersonaMap = {
   "↑↑↑": "STAR",
   "↑↑↓": "WILD",
   "↑↓↑": "COACH",
-  "↑↓↓": "NEWS",
+  "↑↓↓": "AIRDROP",
   "↓↑↑": "INVISIBLE",
   "↓↑↓": "SURPRISE",
   "↓↓↑": "ASSASSIN",

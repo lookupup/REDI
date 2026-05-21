@@ -188,7 +188,7 @@
 - `↑↑↑` = `STAR` 顶流女明星
 - `↑↑↓` = `WILD` 大艺术家
 - `↑↓↑` = `COACH` 硬核教练
-- `↑↓↓` = `NEWS` 战地记者
+- `↑↓↓` = `AIRDROP` 战地记者
 - `↓↑↑` = `INVISIBLE` 隐形嘉宾
 - `↓↑↓` = `SURPRISE` 神秘转学生
 - `↓↓↑` = `ASSASSIN` 电量刺客
@@ -253,7 +253,7 @@
 - `STAR`
 - `WILD`
 - `COACH`
-- `NEWS`
+- `AIRDROP`
 - `INVISIBLE`
 - `SURPRISE`
 - `ASSASSIN`
@@ -264,7 +264,7 @@ HARD 融合版 key：
 - `STAR_HARD`
 - `WILD_HARD`
 - `COACH_HARD`
-- `NEWS_HARD`
+- `AIRDROP_HARD`
 - `INVISIBLE_HARD`
 - `SURPRISE_HARD`
 - `ASSASSIN_HARD`

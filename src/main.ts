@@ -44,7 +44,7 @@ const personaImages: Record<string, string> = {
   STAR: new URL("../assets/personas/cutouts/star.png", import.meta.url).toString(),
   WILD: new URL("../assets/personas/cutouts/wild.png", import.meta.url).toString(),
   COACH: new URL("../assets/personas/cutouts/coach.png", import.meta.url).toString(),
-  NEWS: new URL("../assets/personas/cutouts/news.png", import.meta.url).toString(),
+  AIRDROP: new URL("../assets/personas/cutouts/AIRDROP.png", import.meta.url).toString(),
   INVISIBLE: new URL("../assets/personas/cutouts/invisible.png", import.meta.url).toString(),
   SURPRISE: new URL("../assets/personas/cutouts/surprise.png", import.meta.url).toString(),
   ASSASSIN: new URL("../assets/personas/cutouts/assassin.png", import.meta.url).toString(),
