@@ -42,9 +42,8 @@ body {
 
 #root {
   min-height: 100vh;
-  height: 100vh;
-  height: 100svh;
-  height: 100dvh;
+  min-height: 100svh;
+  min-height: 100dvh;
   background: #ffffff;
   overflow: hidden;
 }
@@ -53,9 +52,6 @@ body {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  height: 100vh;
-  height: 100svh;
-  height: 100dvh;
   overflow: hidden;
 }
 
@@ -93,12 +89,12 @@ button {
 }
 
 .new-cover {
-  height: 100vh;
-  height: 100svh;
-  height: 100dvh;
-  min-height: 0;
-  padding-top: clamp(20px, 4.3svh, 46px);
-  padding-bottom: clamp(10px, 1.8svh, 18px);
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  justify-content: center;
+  padding-top: max(clamp(18px, 3.2dvh, 34px), env(safe-area-inset-top));
+  padding-bottom: max(clamp(18px, 3.2dvh, 34px), env(safe-area-inset-bottom));
   background:
     radial-gradient(circle at 50% 33%, rgba(255, 255, 255, 0.38) 0 18%, rgba(255, 255, 255, 0.12) 45%, rgba(255, 255, 255, 0) 62%),
     linear-gradient(180deg, #fff0fa 0%, #fde8f6 42%, #f6c7e9 72%, #ed9ed8 88%, #69d7df 100%);
@@ -271,6 +267,8 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
+  padding-top: max(1.25rem, env(safe-area-inset-top)) !important;
+  padding-bottom: max(1.6rem, env(safe-area-inset-bottom)) !important;
   overflow-y: auto;
 }
 
@@ -315,7 +313,7 @@ button {
 }
 
 .question-page-warmup .question-body {
-  justify-content: flex-start;
+  justify-content: center;
   padding-bottom: 0;
 }
 
