@@ -31,9 +31,10 @@ type ResultParts = {
 
 const h = React.createElement;
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
-const homePadImage = new URL("../assets/reference/home-pad.png", import.meta.url).toString();
+const homePadImage = new URL("../assets/reference/home-pad-labeled.png", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
 const specialResultImage = new URL("../assets/reference/aef-result.png", import.meta.url).toString();
+const coverStartButtonImage = new URL("../assets/reference/cover-start-button.png", import.meta.url).toString();
 
 const initialState: AppState = {
   page: "cover",
@@ -221,7 +222,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       className: "cover-start-button",
       "aria-label": cover.cta
     },
-      h("span", { className: "cover-start-blob" }, cover.cta)
+      h("img", { src: coverStartButtonImage, alt: "", className: "cover-start-image" })
     ),
     h("section", { className: "cover-copy relative z-10 text-black/82" },
       h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；有时声势浩大，有时安静路过；", h("br"), "有时给你带来能量，有时让你只想躺平。"),

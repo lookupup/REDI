@@ -125,7 +125,7 @@ button {
 .cover-start-button {
   position: relative;
   z-index: 10;
-  width: min(146px, 38vw);
+  width: min(136px, 36vw);
   margin-top: clamp(2px, 0.6svh, 6px);
   margin-bottom: 0;
   border: 0;
@@ -194,8 +194,7 @@ button {
 }
 
 .cover-start-button:focus-visible .cover-start-image {
-  outline: 3px solid rgba(119, 216, 223, 0.72);
-  outline-offset: 5px;
+  outline: none;
 }
 
 .cover-hero-mark {
@@ -383,7 +382,7 @@ button {
 }
 
 .result-page .result-footer-button-copied {
-  background: linear-gradient(180deg, #ffffff 0%, #fde8f6 34%, #f4a2d6 68%, #93dfe6 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #fde8f6 28%, #f7a7dc 66%, #f264c5 100%);
 }
 
 .result-page > button {
