@@ -115,7 +115,7 @@ button {
 }
 
 .cover-copy > :not([hidden]) ~ :not([hidden]) {
-  margin-top: clamp(6px, 1.25svh, 10px);
+  margin-top: clamp(14px, 2.1svh, 22px);
 }
 
 .cover-start-button {
