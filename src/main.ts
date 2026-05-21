@@ -37,6 +37,7 @@ const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const specialResultImage = publicAsset("images/personas/common.png");
 const coverStartButtonImage = new URL("../assets/reference/cover-start-button.png", import.meta.url).toString();
+const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关习惯与感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛、经量突变或其他不适，请及时前往正规医院咨询专业医生。";
 
 const initialState: AppState = {
   page: "cover",
@@ -385,7 +386,8 @@ function SpecialResultPage({
       type: "button",
       onClick: onRestart,
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
-    }, "重新测试")
+    }, "重新测试"),
+    h(ResultDisclaimer)
   );
 }
 
@@ -460,7 +462,16 @@ function FinalResultPage({
       onClick: onRestart,
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
     }, "重新测试"),
+    h(ResultDisclaimer),
     activePopup && h(ResultPopup, { type: activePopup, parts, calculatedResult, onClose: onClosePopup })
+  );
+}
+
+function ResultDisclaimer() {
+  return h("p", { className: "result-disclaimer mx-auto" },
+    resultDisclaimer,
+    h("br"),
+    "关爱自己，从认真对待身体的真实信号开始。"
   );
 }
 

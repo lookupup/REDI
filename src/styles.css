@@ -433,6 +433,16 @@ button {
   font-size: 0.86rem;
 }
 
+.result-disclaimer {
+  max-width: 410px;
+  margin-top: 22px;
+  padding: 0 16px;
+  text-align: left;
+  font-size: 0.72rem;
+  line-height: 1.65;
+  color: rgba(0, 0, 0, 0.42);
+}
+
 .result-page .result-avatar-wrap {
   width: clamp(148px, 21svh, 184px) !important;
   height: clamp(148px, 21svh, 184px) !important;
@@ -907,7 +917,9 @@ button {
   margin-top: 12px;
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(253, 227, 244, 0.66), rgba(205, 244, 247, 0.66));
+  background-clip: padding-box;
   padding: 22px 20px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.82);
   text-align: left;
 }
 
@@ -916,7 +928,7 @@ button {
 }
 
 .save-section-action {
-  margin-top: 24px;
+  margin-top: 18px;
 }
 
 .save-badge-heading {
