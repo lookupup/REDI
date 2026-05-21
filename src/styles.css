@@ -382,14 +382,37 @@ button {
   --aqua: #c9f3f6;
   --blue-card: #c5d7ed;
   --teal: #77d8df;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.result-page .phone-status-spacer {
+  min-height: clamp(4px, 0.9svh, 12px);
+}
+
+.result-page > section:first-of-type {
+  padding-top: clamp(8px, 1.4svh, 18px) !important;
 }
 
 .result-title {
-  font-size: 1.78rem;
+  font-size: clamp(1.46rem, 5.8vw, 1.78rem);
+  line-height: 1.12;
 }
 
 .result-page blockquote p {
-  font-size: 1.56rem;
+  font-size: clamp(1.28rem, 5vw, 1.5rem);
+  line-height: 1.22;
+}
+
+.result-page blockquote {
+  margin-top: clamp(10px, 1.5svh, 18px) !important;
+  max-width: min(372px, calc(100vw - 54px)) !important;
+  padding: clamp(14px, 2svh, 18px) clamp(18px, 4.6vw, 28px) !important;
+}
+
+.result-page blockquote p {
+  padding-left: clamp(14px, 3.8vw, 20px) !important;
 }
 
 .result-page footer button {
@@ -407,6 +430,12 @@ button {
 
 .result-page > button {
   font-size: 0.86rem;
+}
+
+.result-page .result-avatar-wrap {
+  width: clamp(148px, 21svh, 184px) !important;
+  height: clamp(148px, 21svh, 184px) !important;
+  margin-top: clamp(10px, 1.5svh, 18px) !important;
 }
 
 .special-result-page {
@@ -542,6 +571,7 @@ button {
 .result-chip-row {
   column-gap: 16px;
   row-gap: 8px;
+  margin-top: clamp(10px, 1.5svh, 18px) !important;
 }
 
 .result-chip-icon {
@@ -555,6 +585,7 @@ button {
 .result-card-stack {
   width: min(390px, 100%);
   height: 328px;
+  margin-top: clamp(10px, 1.5svh, 18px) !important;
 }
 
 .result-stack-card {
@@ -621,6 +652,81 @@ button {
   z-index: 3;
   background: var(--pink);
   transform: translateX(-50%) rotate(var(--tilt));
+}
+
+@media (max-height: 780px) {
+  .result-page .phone-status-spacer {
+    min-height: 2px;
+  }
+
+  .result-page > section:first-of-type {
+    padding-top: 4px !important;
+  }
+
+  .result-title {
+    font-size: 1.34rem;
+  }
+
+  .result-page .result-avatar-wrap {
+    width: 132px !important;
+    height: 132px !important;
+    margin-top: 6px !important;
+  }
+
+  .result-chip-row {
+    column-gap: 12px;
+    margin-top: 7px !important;
+  }
+
+  .result-chip {
+    min-height: 22px;
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .result-page blockquote {
+    margin-top: 7px !important;
+    padding: 10px 16px !important;
+  }
+
+  .result-page blockquote p {
+    padding-left: 12px !important;
+    font-size: 1.16rem;
+    line-height: 1.18;
+  }
+
+  .result-card-stack {
+    height: 304px;
+    margin-top: 7px !important;
+  }
+
+  .result-stack-card {
+    width: min(350px, calc(100vw - 44px));
+    height: 148px;
+    border-radius: 13px;
+  }
+
+  .result-stack-card span {
+    left: 24px;
+    top: 14px;
+    font-size: 1.14rem;
+  }
+
+  .result-card-action {
+    top: 68px;
+  }
+
+  .result-card-hidden {
+    top: 132px;
+  }
+
+  .result-page .result-footer-button {
+    min-height: 58px;
+  }
+
+  .result-page footer {
+    margin-top: 2px !important;
+  }
 }
 
 .result-modal {
