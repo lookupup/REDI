@@ -1043,24 +1043,11 @@ button {
 }
 
 .popup-bubble {
-  right: 14px;
-  bottom: 76px;
-  width: 148px;
-  height: 66px;
-  border-radius: 18px;
-  background: var(--hot-pink);
-  transform: rotate(17deg);
-  animation-delay: 70ms;
+  display: none;
 }
 
 .popup-bubble::after {
-  content: "";
-  position: absolute;
-  left: 58px;
-  bottom: -12px;
-  border-width: 14px 7px 0 17px;
-  border-style: solid;
-  border-color: var(--hot-pink) transparent transparent transparent;
+  content: none;
 }
 
 .popup-curl {
