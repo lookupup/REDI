@@ -25,6 +25,7 @@
 html {
   color-scheme: light;
   background: #ffffff;
+  font-size: 16px;
 }
 
 body {
@@ -32,6 +33,7 @@ body {
   min-width: 320px;
   background: #ffffff;
   font-family: "Gopher", "ChillDIN", "Inter", system-ui, sans-serif;
+  font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -39,6 +41,12 @@ body {
 #root {
   min-height: 100vh;
   background: #ffffff;
+}
+
+.app-shell {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
 }
 
 button {
@@ -75,15 +83,40 @@ button {
 }
 
 .new-cover {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding-top: clamp(28px, 6svh, 60px);
+  padding-bottom: clamp(14px, 2.5svh, 24px);
   background:
     radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.92) 0 22%, rgba(255, 255, 255, 0.18) 48%, rgba(255, 255, 255, 0) 62%),
     linear-gradient(180deg, #ffffff 0 54%, #f7dff1 75%, #ef9ed8 89%, #69d7df 100%);
+}
+
+.new-cover h1 {
+  font-size: clamp(1.82rem, 7vw, 2rem);
+}
+
+.new-cover p {
+  font-size: clamp(1.2rem, 5.2vw, 1.36rem);
+}
+
+.new-cover section:nth-of-type(3) {
+  margin-top: clamp(8px, 1.8svh, 16px);
+  padding-bottom: clamp(14px, 2.6svh, 24px);
+  font-size: clamp(0.94rem, 3.7vw, 1rem);
+  line-height: 1.42;
+}
+
+.new-cover section:nth-of-type(3) > :not([hidden]) ~ :not([hidden]) {
+  margin-top: clamp(12px, 2.4svh, 18px);
 }
 
 .cover-start-button {
   position: relative;
   z-index: 10;
   width: min(280px, 100%);
+  margin-top: auto;
   margin-bottom: 0;
   border: 0;
   background: transparent;
@@ -94,12 +127,12 @@ button {
 
 .cover-start-pulse {
   display: flex;
-  min-height: 54px;
+  min-height: 52px;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.96);
-  font-size: 1rem;
+  font-size: 1.04rem;
   font-weight: 700;
   box-shadow: 0 0 0 0 rgba(119, 216, 223, 0.5), 0 12px 28px rgba(61, 46, 54, 0.08);
   animation: cover-start-breathe 1.9s ease-in-out infinite;
@@ -117,8 +150,8 @@ button {
 .cover-hero-mark {
   position: relative;
   z-index: 1;
-  width: min(340px, 88vw);
-  margin-top: 28px;
+  width: min(292px, 73vw);
+  margin-top: clamp(12px, 2.4svh, 24px);
 }
 
 .cover-hero-image {
@@ -155,6 +188,7 @@ button {
   border-radius: 16px;
   background: linear-gradient(100deg, rgba(243, 203, 233, 0.78), rgba(126, 216, 224, 0.86));
   box-shadow: inset 0 0 0 1px rgba(200, 118, 173, 0.18), 0 10px 28px rgba(200, 118, 173, 0.12);
+  font-size: 1rem;
 }
 
 .question-option:hover {
@@ -175,6 +209,9 @@ button {
 
 .question-page {
   position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   overflow-y: auto;
 }
 
@@ -199,14 +236,19 @@ button {
 
 .question-header {
   padding-left: 2px;
+  font-size: 0.84rem;
 }
 
 .question-title-row {
   min-height: 74px;
 }
 
+.question-title-row p {
+  font-size: 1.14rem;
+}
+
 .question-page-warmup .phone-status-spacer {
-  min-height: 58px;
+  min-height: clamp(14px, 2.4svh, 30px);
 }
 
 .question-page-warmup .question-header {
@@ -220,7 +262,12 @@ button {
 
 .question-page-warmup .question-title-row {
   min-height: auto;
-  margin-bottom: 14px;
+  margin-bottom: clamp(8px, 1.6svh, 12px);
+}
+
+.question-page-warmup .question-title-row p {
+  font-size: 1.06rem;
+  line-height: 1.5;
 }
 
 .question-page-warmup .question-icon {
@@ -229,49 +276,25 @@ button {
 
 .question-page-warmup .question-option {
   min-height: 50px;
-  padding-bottom: 0.82rem;
-  padding-top: 0.82rem;
-  font-size: 0.86rem;
+  padding-bottom: 0.72rem;
+  padding-top: 0.72rem;
+  font-size: 1rem;
 }
 
 .question-page-warmup [role="list"] {
-  gap: 12px;
+  gap: clamp(8px, 1.4svh, 10px);
 }
 
 .q0-illustration {
   position: relative;
-  margin: 0 auto 16px;
-  width: min(320px, 88vw);
+  margin: clamp(4px, 1svh, 8px) auto 0;
+  width: min(268px, 70vw);
 }
 
 .q0-drop-image {
   display: block;
   width: 100%;
   height: auto;
-}
-
-.q0-next-button {
-  width: min(280px, 100%);
-  min-height: 54px;
-  margin: 0 auto;
-  border: 0;
-  border-radius: 8px;
-  background: #77d8df;
-  color: #111;
-  font-size: 1rem;
-  font-weight: 700;
-  outline: none;
-  transition: opacity 160ms ease;
-}
-
-.q0-next-button:hover,
-.q0-next-button:focus-visible {
-  opacity: 0.86;
-}
-
-.q0-next-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
 }
 
 .result-hero {
@@ -289,6 +312,22 @@ button {
   --aqua: #c9f3f6;
   --blue-card: #c5d7ed;
   --teal: #77d8df;
+}
+
+.result-page h1 {
+  font-size: 1.78rem;
+}
+
+.result-page blockquote p {
+  font-size: 1.56rem;
+}
+
+.result-page footer button {
+  font-size: 0.98rem;
+}
+
+.result-page > button {
+  font-size: 0.86rem;
 }
 
 .result-key-elements {
@@ -362,7 +401,7 @@ button {
   border-radius: 999px;
   background: #dedede;
   padding: 2px 9px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #111;
 }
@@ -401,7 +440,7 @@ button {
   width: fit-content;
   max-width: 72%;
   font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
-  font-size: 1.18rem;
+  font-size: 1.24rem;
   font-weight: 500;
   line-height: 1.35;
   color: #111;
@@ -464,6 +503,15 @@ button {
   animation: popup-card-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
+.result-popup-card h2 {
+  font-size: 1.42rem;
+}
+
+.result-popup-card p,
+.result-popup-card li {
+  font-size: 1rem;
+}
+
 .result-popup-close {
   position: absolute;
   right: 16px;
@@ -493,7 +541,7 @@ button {
   background: rgba(17, 17, 17, 0.88);
   padding: 10px 18px;
   text-align: center;
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #fff;
   opacity: 0;
@@ -596,7 +644,7 @@ button {
   border-left: 4px solid #dcdcdc;
   padding-left: 18px;
   font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
-  font-size: 1.4rem;
+  font-size: 1.48rem;
   font-weight: 700;
   line-height: 1.28;
   text-align: left;
@@ -613,13 +661,13 @@ button {
 .save-section h2 {
   margin: 0 0 18px;
   font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
-  font-size: 1rem;
+  font-size: 1.06rem;
   font-weight: 600;
 }
 
 .save-section h3 {
   margin: 18px 0 8px;
-  font-size: 0.96rem;
+  font-size: 1.02rem;
   font-weight: 700;
 }
 
@@ -629,7 +677,7 @@ button {
 
 .save-section p,
 .save-section li {
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   line-height: 1.75;
   color: rgba(0, 0, 0, 0.78);
 }
@@ -656,7 +704,7 @@ button {
 .save-card-footer {
   margin-top: 20px;
   text-align: center;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: rgba(0, 0, 0, 0.42);
 }
 
@@ -669,7 +717,7 @@ button {
   border-radius: 14px;
   background: #77d8df;
   padding: 14px 16px;
-  font-size: 0.96rem;
+  font-size: 1.04rem;
   font-weight: 700;
   color: #111;
   outline: none;

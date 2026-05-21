@@ -108,13 +108,6 @@ function App() {
     });
   };
 
-  const selectQuestionAnswer = (question: Question, option: QuestionOption) => {
-    setState((current) => ({
-      ...current,
-      answers: { ...current.answers, [question.id]: option.id }
-    }));
-  };
-
   const goToPreviousQuestion = () => {
     setState((current) => ({
       ...current,
@@ -135,7 +128,6 @@ function App() {
       total: allQuestions.length,
       selectedAnswer: state.answers[allQuestions[state.questionIndex].id],
       onAnswer: answerQuestion,
-      onSelectAnswer: selectQuestionAnswer,
       onBack: goToPreviousQuestion
     }),
     state.page === "result" && h(FinalResultPage, {
@@ -152,14 +144,14 @@ function App() {
 }
 
 function PhoneShell({ children }: { children: React.ReactNode }) {
-  return h("div", { className: "min-h-screen w-full bg-white" },
-    h("div", { className: "min-h-screen w-full overflow-hidden bg-white" }, children)
+  return h("div", { className: "app-shell w-full bg-white" },
+    h("div", { className: "app-shell w-full overflow-hidden bg-white" }, children)
   );
 }
 
 function CoverPage({ onStart }: { onStart: () => void }) {
   return h("main", {
-    className: "new-cover relative flex min-h-screen flex-col items-center overflow-hidden px-9 pb-9 pt-[17vh] text-center",
+    className: "new-cover relative flex flex-col items-center overflow-hidden px-9 text-center",
   },
     h("section", { className: "relative z-10" },
       h("h1", { className: "text-[1.82rem] font-bold leading-tight text-black" },
@@ -200,7 +192,6 @@ function QuestionPage({
   total,
   selectedAnswer,
   onAnswer,
-  onSelectAnswer,
   onBack
 }: {
   question: Question;
@@ -208,7 +199,6 @@ function QuestionPage({
   total: number;
   selectedAnswer?: string;
   onAnswer: (question: Question, option: QuestionOption) => void;
-  onSelectAnswer: (question: Question, option: QuestionOption) => void;
   onBack: () => void;
 }) {
   const progress = Math.round(((index + 1) / total) * 100);
@@ -219,9 +209,8 @@ function QuestionPage({
     ? hiddenSymbols[question.id] || "spark"
     : dimensionSymbols[question.dimension || ""] || "spark";
   const isWarmup = question.id === q0.id;
-  const selectedOption = question.options.find((option) => option.id === selectedAnswer);
 
-  return h("main", { className: `question-page ${isWarmup ? "question-page-warmup" : ""} flex min-h-screen flex-col bg-white px-7 pb-8 pt-5` },
+  return h("main", { className: `question-page ${isWarmup ? "question-page-warmup" : ""} flex flex-col bg-white px-7 pb-8 pt-5` },
     index > 0 && h("button", {
       type: "button",
       onClick: onBack,
@@ -250,8 +239,8 @@ function QuestionPage({
         question.options.map((option) => h("button", {
           key: option.id,
           type: "button",
-          className: `question-option px-5 py-4 text-center text-[0.92rem] leading-relaxed text-black outline-none transition focus-visible:ring-4 focus-visible:ring-[#9CA8B5]/35 ${selectedAnswer === option.id ? "question-option-selected" : ""}`,
-          onClick: () => isWarmup ? onSelectAnswer(question, option) : onAnswer(question, option),
+          className: `question-option px-5 py-4 text-center leading-relaxed text-black outline-none transition focus-visible:ring-4 focus-visible:ring-[#9CA8B5]/35 ${selectedAnswer === option.id ? "question-option-selected" : ""}`,
+          onClick: () => onAnswer(question, option),
           "aria-pressed": selectedAnswer === option.id
         },
           option.text
@@ -259,13 +248,7 @@ function QuestionPage({
       ),
       isWarmup && h("div", { className: "q0-illustration", "aria-hidden": "true" },
         h("img", { src: q0DropImage, alt: "", className: "q0-drop-image" })
-      ),
-      isWarmup && h("button", {
-        type: "button",
-        onClick: () => selectedOption && onAnswer(question, selectedOption),
-        disabled: !selectedOption,
-        className: "q0-next-button"
-      }, "下一页")
+      )
     )
   );
 }
