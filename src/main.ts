@@ -37,7 +37,7 @@ const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const specialResultImage = publicAsset("images/personas/common.png");
 const coverStartButtonImage = new URL("../assets/reference/cover-start-button.png", import.meta.url).toString();
-const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关习惯与感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛、经量突变或其他不适，请及时前往正规医院咨询专业医生。";
+const resultDisclaimer = "*本测试仅为趣味互动工具，旨在帮助你觉察月经相关感受，不能作为医学诊断依据。如有持续周期异常、剧烈疼痛或其他不适，请及时前往正规医院咨询。";
 
 const initialState: AppState = {
   page: "cover",
@@ -468,11 +468,7 @@ function FinalResultPage({
 }
 
 function ResultDisclaimer() {
-  return h("p", { className: "result-disclaimer mx-auto" },
-    resultDisclaimer,
-    h("br"),
-    "关爱自己，从认真对待身体的真实信号开始。"
-  );
+  return h("p", { className: "result-disclaimer mx-auto" }, resultDisclaimer);
 }
 
 function TiltCard({ className, label, onClick }: { className: string; label: string; onClick: () => void }) {
@@ -593,14 +589,14 @@ function SaveImagePopup({
             parts.actionKit.body.map((paragraph) => h("p", { key: paragraph }, paragraph)),
             h("ul", null, parts.actionKit.tips.map((tip) => h("li", { key: tip }, tip)))
           ),
-          h("section", { className: "save-badge-heading" },
+          h("section", { className: "save-section save-section-badges" },
             h("h2", null, "特别勋章解读"),
-          ),
-          badges.map((badge) => h("section", { key: badge.id, className: "save-section save-badge-card" },
+            badges.map((badge) => h("div", { key: badge.id, className: "save-badge-block" },
               h("h3", null, badge.name),
               h("p", null, badge.declaration),
               badge.body.map((paragraph) => h("p", { key: paragraph }, paragraph))
-          )),
+            ))
+          ),
           h("footer", { className: "save-card-footer" }, "REDI 月经人格测试 · 你的完整结果长图")
         )
       ),

@@ -861,10 +861,7 @@ button {
 .save-long-card {
   position: relative;
   min-height: 100%;
-  background:
-    radial-gradient(circle at 0% 48%, rgba(247, 198, 233, 0.42) 0 15%, rgba(247, 198, 233, 0) 30%),
-    radial-gradient(circle at 100% 42%, rgba(119, 216, 223, 0.36) 0 16%, rgba(119, 216, 223, 0) 30%),
-    #ffffff;
+  background: #ffffff;
   color: #111;
   overflow: hidden;
   padding: 0 0 18px;
@@ -929,7 +926,6 @@ button {
   background: linear-gradient(135deg, rgba(253, 227, 244, 0.66), rgba(205, 244, 247, 0.66));
   background-clip: padding-box;
   padding: 22px 20px;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.82);
   text-align: left;
 }
 
@@ -941,14 +937,6 @@ button {
   margin-top: 18px;
 }
 
-.save-badge-heading {
-  margin-top: 26px;
-  border-radius: 16px 16px 8px 8px;
-  background: rgba(255, 255, 255, 0.78);
-  padding: 14px 20px 12px;
-  text-align: left;
-}
-
 .save-section h2 {
   margin: 0 0 18px;
   font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
@@ -956,11 +944,8 @@ button {
   font-weight: 800;
 }
 
-.save-badge-heading h2 {
-  margin: 0;
-  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
-  font-size: 1.06rem;
-  font-weight: 800;
+.save-section-badges {
+  margin-top: 18px;
 }
 
 .save-section h3 {
@@ -989,8 +974,10 @@ button {
   margin-top: 8px;
 }
 
-.save-badge-card {
-  margin-top: 8px;
+.save-badge-block + .save-badge-block {
+  margin-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  padding-top: 18px;
 }
 
 .save-card-footer {
