@@ -529,20 +529,39 @@ button {
 .result-chip {
   display: inline-flex;
   align-items: center;
-  min-height: 22px;
+  gap: 4px;
+  min-height: 24px;
   border-radius: 999px;
   background: #dedede;
-  padding: 2px 9px;
+  padding: 3px 10px;
   font-size: 12px;
   font-weight: 700;
   color: #111;
 }
 
+.result-chip-row {
+  column-gap: 16px;
+  row-gap: 8px;
+}
+
+.result-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.result-card-stack {
+  width: min(390px, 100%);
+  height: 328px;
+}
+
 .result-stack-card {
   position: absolute;
-  left: 8px;
-  right: 8px;
-  height: 96px;
+  left: 50%;
+  width: min(360px, calc(100vw - 48px));
+  height: 158px;
   border: 0;
   border-radius: 14px;
   padding: 0;
@@ -557,11 +576,11 @@ button {
 .result-stack-card:hover,
 .result-stack-card:focus-visible {
   filter: brightness(1.02);
-  transform: translateY(-10px) rotate(var(--tilt));
+  transform: translateX(-50%) translateY(-10px) rotate(var(--tilt));
 }
 
 .result-stack-card:active {
-  transform: translateY(-16px) rotate(var(--tilt)) scale(1.01);
+  transform: translateX(-50%) translateY(-16px) rotate(var(--tilt)) scale(1.01);
 }
 
 .result-stack-card span {
@@ -585,23 +604,23 @@ button {
   top: 0;
   z-index: 1;
   background: linear-gradient(110deg, #f9def2 0%, #dbedf6 78%, #c9f3f6 100%);
-  transform: rotate(var(--tilt));
+  transform: translateX(-50%) rotate(var(--tilt));
 }
 
 .result-card-action {
   --tilt: 6deg;
-  top: 82px;
+  top: 76px;
   z-index: 2;
   background: rgba(176, 201, 230, 0.82);
-  transform: rotate(var(--tilt));
+  transform: translateX(-50%) rotate(var(--tilt));
 }
 
 .result-card-hidden {
   --tilt: -4deg;
-  top: 158px;
+  top: 150px;
   z-index: 3;
   background: var(--pink);
-  transform: rotate(var(--tilt));
+  transform: translateX(-50%) rotate(var(--tilt));
 }
 
 .result-modal {

@@ -30,6 +30,7 @@ type ResultParts = {
 };
 
 const h = React.createElement;
+const chipIcons = ["✷", "✦", "✧", "✹"];
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
 const homePadImage = new URL("../assets/reference/home-pad-labeled.png", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
@@ -424,15 +425,21 @@ function FinalResultPage({
           className: "result-avatar"
         })
       ),
-      h("div", { className: "mt-5 flex flex-wrap justify-center gap-2" },
-        parts.persona.tags.map((tag) => h("span", { key: tag, className: "result-chip" }, `≋ ${tag}`)),
-        calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" }, "♿ DISABILITY")
+      h("div", { className: "result-chip-row mt-5 flex flex-wrap justify-center" },
+        parts.persona.tags.map((tag, index) => h("span", { key: tag, className: "result-chip" },
+          h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[index % chipIcons.length]),
+          tag
+        )),
+        calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" },
+          h("span", { className: "result-chip-icon", "aria-hidden": "true" }, chipIcons[3]),
+          "DISABILITY"
+        )
       ),
       h("blockquote", { className: "mx-auto mt-5 max-w-[372px] rounded-2xl bg-gradient-to-r from-[#fde3f4] to-[#cdf4f7] px-7 py-5 text-left" },
         h("p", { className: "border-l-4 border-white/80 pl-5 font-cn text-[1.5rem] font-semibold leading-snug text-black" }, `“${parts.persona.declaration}”`)
       )
     ),
-    h("section", { className: "relative mx-auto mt-5 h-[285px] max-w-[430px]", "aria-label": "结果详情入口" },
+    h("section", { className: "result-card-stack relative mx-auto mt-5", "aria-label": "结果详情入口" },
       h(TiltCard, { className: "result-stack-card result-card-persona", label: "人格档案", onClick: () => onOpenPopup("persona") }),
       h(TiltCard, { className: "result-stack-card result-card-action", label: "经期行动小锦囊", onClick: () => onOpenPopup("action") }),
       h(TiltCard, { className: "result-stack-card result-card-hidden", label: hiddenTitle, onClick: () => onOpenPopup("hidden") })
