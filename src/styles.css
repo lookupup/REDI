@@ -382,6 +382,16 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.result-page::-webkit-scrollbar {
+  display: none;
 }
 
 .result-page .phone-status-spacer {
