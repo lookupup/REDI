@@ -855,10 +855,10 @@ button {
 .save-long-card::before {
   content: "";
   position: absolute;
-  inset: 38% -54px auto -54px;
-  height: min(760px, 58%);
-  background: url("../assets/reference/pad-watermark-bottom.png") center top / contain no-repeat;
-  opacity: 0.18;
+  inset: 260px -34px auto -34px;
+  height: min(980px, 72%);
+  background: url("../assets/reference/pad-watermark-bottom.png") center top / 96% auto no-repeat;
+  opacity: 0.26;
   pointer-events: none;
 }
 
@@ -908,7 +908,7 @@ button {
 .save-section {
   margin-top: 12px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(253, 227, 244, 0.72), rgba(205, 244, 247, 0.72));
+  background: linear-gradient(135deg, rgba(253, 227, 244, 0.66), rgba(205, 244, 247, 0.66));
   padding: 22px 20px;
   text-align: left;
 }
@@ -918,13 +918,13 @@ button {
 }
 
 .save-section-action {
-  margin-top: 18px;
+  margin-top: 24px;
 }
 
 .save-badge-heading {
-  margin-top: 18px;
+  margin-top: 26px;
   border-radius: 16px 16px 8px 8px;
-  background: linear-gradient(135deg, rgba(253, 227, 244, 0.58), rgba(205, 244, 247, 0.58));
+  background: rgba(255, 255, 255, 0.78);
   padding: 14px 20px 12px;
   text-align: left;
 }
