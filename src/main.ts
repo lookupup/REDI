@@ -29,6 +29,8 @@ type ResultParts = {
 
 const h = React.createElement;
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
+const homePadImage = new URL("../assets/reference/home-pad.png", import.meta.url).toString();
+const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
 
 const initialState: AppState = {
   page: "cover",
@@ -171,15 +173,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       )
     ),
     h("section", { className: "cover-hero-mark", "aria-hidden": "true" },
-      h("span", { className: "cover-pad-symbol" },
-        h("span", { className: "cover-pad-core" }),
-        h("span", { className: "cover-pad-tail cover-pad-tail-top" }),
-        h("span", { className: "cover-pad-tail cover-pad-tail-bottom" })
-      ),
-      h("span", { className: "cover-chat cover-chat-left" }),
-      h("span", { className: "cover-chat cover-chat-mid" }),
-      h("span", { className: "cover-chat cover-chat-right" }),
-      h("span", { className: "period-face cover-face" }, h("span", { className: "face-smile" }))
+      h("img", { src: homePadImage, alt: "", className: "cover-hero-image" })
     ),
     h("section", { className: "relative z-10 mt-5 space-y-5 pb-8 text-[0.92rem] leading-5 text-black/86" },
       h("p", null, "每个月，它好像都在用一种很奇怪的方式提醒你：", h("br"), "你的身体、情绪和生活，", h("br"), "其实一直在说话。"),
@@ -264,10 +258,7 @@ function QuestionPage({
         ))
       ),
       isWarmup && h("div", { className: "q0-illustration", "aria-hidden": "true" },
-        h("span", { className: "q0-spotlight" }),
-        h("span", { className: "q0-stage" }),
-        h("span", { className: "period-face q0-face" }, h("span", { className: "face-smile" })),
-        h("span", { className: "q0-bubble" })
+        h("img", { src: q0DropImage, alt: "", className: "q0-drop-image" })
       ),
       isWarmup && h("button", {
         type: "button",
@@ -342,11 +333,11 @@ function FinalResultPage({
         parts.persona.tags.map((tag) => h("span", { key: tag, className: "result-chip" }, `≋ ${tag}`)),
         calculatedResult.badges.includes("HARD") && h("span", { className: "result-chip" }, "♿ DISABILITY")
       ),
-      h("blockquote", { className: "mx-auto mt-5 max-w-[405px] rounded-2xl bg-gradient-to-r from-[#fde3f4] to-[#cdf4f7] px-7 py-5 text-left" },
+      h("blockquote", { className: "mx-auto mt-5 max-w-[372px] rounded-2xl bg-gradient-to-r from-[#fde3f4] to-[#cdf4f7] px-7 py-5 text-left" },
         h("p", { className: "border-l-4 border-white/80 pl-5 font-cn text-[1.5rem] font-semibold leading-snug text-black" }, `“${parts.persona.declaration}”`)
       )
     ),
-    h("section", { className: "relative mx-auto mt-5 h-[300px] max-w-[410px]", "aria-label": "结果详情入口" },
+    h("section", { className: "relative mx-auto mt-5 h-[300px] max-w-[430px]", "aria-label": "结果详情入口" },
       h(TiltCard, { className: "result-stack-card result-card-persona", label: "人格档案", onClick: () => onOpenPopup("persona") }),
       h(TiltCard, { className: "result-stack-card result-card-action", label: "经期行动小锦囊", onClick: () => onOpenPopup("action") }),
       h(TiltCard, { className: "result-stack-card result-card-hidden", label: hiddenTitle, onClick: () => onOpenPopup("hidden") })

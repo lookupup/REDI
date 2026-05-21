@@ -117,152 +117,14 @@ button {
 .cover-hero-mark {
   position: relative;
   z-index: 1;
-  width: min(320px, 86vw);
-  height: 330px;
-  margin-top: 30px;
+  width: min(340px, 88vw);
+  margin-top: 28px;
 }
 
-.cover-pad-symbol {
-  position: absolute;
-  left: 50%;
-  top: 4px;
-  width: 204px;
-  height: 300px;
-  transform: translateX(-50%);
-}
-
-.cover-pad-core {
-  position: absolute;
-  left: 50%;
-  top: 8px;
-  width: 124px;
-  height: 276px;
-  border: 13px solid rgba(181, 141, 214, 0.42);
-  border-left-color: transparent;
-  border-radius: 58% 42% 58% 42% / 46% 54% 46% 54%;
-  transform: translateX(-50%) rotate(10deg);
-}
-
-.cover-pad-core::before,
-.cover-pad-core::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.68);
-  transform: translateX(-50%);
-}
-
-.cover-pad-core::before {
-  top: -21px;
-}
-
-.cover-pad-core::after {
-  bottom: -21px;
-}
-
-.cover-pad-tail {
-  position: absolute;
-  left: 50%;
-  width: 86px;
-  height: 13px;
-  border-radius: 999px;
-  background: rgba(181, 141, 214, 0.48);
-  transform: translateX(-50%);
-}
-
-.cover-pad-tail-top {
-  top: 16px;
-  transform: translateX(-46%) rotate(8deg);
-}
-
-.cover-pad-tail-bottom {
-  bottom: 17px;
-  transform: translateX(-55%) rotate(-8deg);
-}
-
-.cover-chat {
-  position: absolute;
+.cover-hero-image {
   display: block;
-  width: 78px;
-  height: 42px;
-  border-radius: 18px;
-  background: #f264c5;
-}
-
-.cover-chat::after {
-  content: "";
-  position: absolute;
-  left: 18px;
-  bottom: -9px;
-  border-width: 11px 5px 0 11px;
-  border-style: solid;
-  border-color: #f264c5 transparent transparent transparent;
-}
-
-.cover-chat-left {
-  left: 14px;
-  top: 92px;
-}
-
-.cover-chat-mid {
-  left: 50%;
-  top: 34px;
-  transform: translateX(-118%);
-}
-
-.cover-chat-right {
-  right: 22px;
-  bottom: 92px;
-}
-
-.period-face {
-  position: absolute;
-  display: block;
-  width: 132px;
-  height: 108px;
-  border: 5px solid #111;
-  border-radius: 92% 8% 62% 38% / 74% 8% 92% 26%;
-  background: linear-gradient(135deg, #ffdff4, #f3a9dd);
-  box-shadow: inset 42px 22px 0 rgba(255, 255, 255, 0.15);
-  transform: rotate(12deg);
-}
-
-.period-face::before,
-.period-face::after {
-  content: "";
-  position: absolute;
-  top: 49px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #111;
-}
-
-.period-face::before {
-  left: 35px;
-}
-
-.period-face::after {
-  left: 58px;
-}
-
-.cover-face {
-  left: 158px;
-  top: 82px;
-}
-
-.face-smile {
-  position: absolute;
-  left: 49px;
-  top: 69px;
-  width: 31px;
-  height: 16px;
-  border-bottom: 3px solid #111;
-  border-radius: 0 0 999px 999px;
-  transform: rotate(-18deg);
+  width: 100%;
+  height: auto;
 }
 
 .phone-status-spacer {
@@ -378,56 +240,14 @@ button {
 
 .q0-illustration {
   position: relative;
-  height: 226px;
   margin: 0 auto 16px;
-  width: min(320px, 86vw);
+  width: min(320px, 88vw);
 }
 
-.q0-spotlight {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 250px;
-  height: 210px;
-  background: linear-gradient(180deg, rgba(208, 241, 244, 0.58), rgba(255, 255, 255, 0));
-  clip-path: polygon(18% 0, 82% 0, 98% 100%, 2% 100%);
-  transform: translateX(-50%);
-}
-
-.q0-stage {
-  position: absolute;
-  left: 50%;
-  bottom: 6px;
-  width: 196px;
-  height: 18px;
-  border-radius: 50%;
-  background: rgba(38, 23, 36, 0.86);
-  transform: translateX(-50%);
-}
-
-.q0-face {
-  left: 50%;
-  bottom: 32px;
-  width: 124px;
-  height: 100px;
-  transform: translateX(-36%) rotate(20deg);
-}
-
-.q0-face .face-smile {
-  left: 45px;
-  top: 65px;
-  transform: rotate(-22deg);
-}
-
-.q0-bubble {
-  position: absolute;
-  left: 74px;
-  bottom: 70px;
-  width: 58px;
-  height: 58px;
-  border: 4px solid #111;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.32);
+.q0-drop-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .q0-next-button {
@@ -549,8 +369,8 @@ button {
 
 .result-stack-card {
   position: absolute;
-  left: 20px;
-  right: 20px;
+  left: 8px;
+  right: 8px;
   height: 142px;
   border: 0;
   border-radius: 14px;
@@ -733,15 +553,11 @@ button {
 .save-long-card::before {
   content: "";
   position: absolute;
-  left: 50%;
-  top: 156px;
-  width: 220px;
-  height: 430px;
-  border: 32px solid rgba(181, 141, 214, 0.13);
-  border-radius: 999px;
-  opacity: 0.75;
+  inset: 110px -54px auto -54px;
+  height: 640px;
+  background: url("../assets/reference/pad-watermark.png") center top / contain no-repeat;
+  opacity: 0.12;
   pointer-events: none;
-  transform: translateX(-50%) rotate(10deg);
 }
 
 .save-long-card > * {
