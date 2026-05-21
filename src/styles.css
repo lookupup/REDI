@@ -26,6 +26,7 @@ html {
   color-scheme: light;
   background: #ffffff;
   font-size: 16px;
+  overflow: hidden;
 }
 
 body {
@@ -34,19 +35,28 @@ body {
   background: #ffffff;
   font-family: "Gopher", "ChillDIN", "Inter", system-ui, sans-serif;
   font-size: 1rem;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 #root {
   min-height: 100vh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .app-shell {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 button {
@@ -83,9 +93,10 @@ button {
 }
 
 .new-cover {
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0;
   padding-top: clamp(30px, 6svh, 58px);
   padding-bottom: clamp(14px, 2.5svh, 24px);
   background:
@@ -119,9 +130,13 @@ button {
   margin-bottom: 0;
   border: 0;
   background: transparent;
+  box-shadow: none;
   color: #111;
   cursor: pointer;
   outline: none;
+  overflow: visible;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .cover-start-pulse {
@@ -151,6 +166,26 @@ button {
   width: 100%;
   height: auto;
   filter: none;
+  animation: cover-start-breathe 1.9s ease-in-out infinite;
+}
+
+.cover-start-blob {
+  display: flex;
+  aspect-ratio: 525 / 343;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 52% 48% 58% 42% / 46% 52% 48% 54%;
+  background:
+    radial-gradient(circle at 72% 45%, rgba(243, 119, 206, 0.78) 0 20%, rgba(243, 119, 206, 0) 56%),
+    radial-gradient(circle at 28% 42%, rgba(118, 216, 223, 0.82) 0 20%, rgba(118, 216, 223, 0) 58%),
+    linear-gradient(115deg, rgba(126, 216, 224, 0.72), rgba(245, 176, 224, 0.86));
+  color: #111;
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(1.18rem, 5.3vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1;
+  filter: blur(0.1px) drop-shadow(0 10px 18px rgba(128, 83, 124, 0.12));
   animation: cover-start-breathe 1.9s ease-in-out infinite;
 }
 
@@ -330,7 +365,7 @@ button {
   --teal: #77d8df;
 }
 
-.result-page h1 {
+.result-title {
   font-size: 1.78rem;
 }
 
@@ -342,16 +377,70 @@ button {
   font-size: 0.98rem;
 }
 
-.result-share-button {
-  background: #f7a7dc;
+.result-page .result-footer-button {
+  min-height: 64px;
+  background: linear-gradient(180deg, #f264c5 0%, #d8b7e5 48%, #77d8df 100%);
 }
 
-.result-share-button-copied {
-  background: #f264c5;
+.result-page .result-footer-button-copied {
+  background: linear-gradient(180deg, #ffffff 0%, #fde8f6 34%, #f4a2d6 68%, #93dfe6 100%);
 }
 
 .result-page > button {
   font-size: 0.86rem;
+}
+
+.special-result-page {
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+}
+
+.special-result-page .phone-status-spacer {
+  min-height: 10px;
+}
+
+.special-key-elements {
+  inset: 68px 0 auto 0;
+  height: 236px;
+}
+
+.special-avatar-wrap {
+  height: 242px;
+  width: 242px;
+  overflow: hidden;
+}
+
+.special-avatar {
+  width: 226px;
+  height: 226px;
+  object-position: center;
+}
+
+.special-result-card {
+  position: relative;
+  margin-top: 76px;
+  width: min(454px, calc(100vw - 58px));
+  border-radius: 12px;
+  background:
+    url("../assets/reference/pad-watermark.png") center / 92% auto no-repeat,
+    linear-gradient(110deg, rgba(249, 222, 242, 0.82) 0%, rgba(219, 237, 246, 0.88) 72%, rgba(201, 243, 246, 0.92) 100%);
+  padding: 22px 30px 36px;
+  text-align: left;
+}
+
+.special-result-card h2 {
+  margin: 0 0 42px;
+  font-size: 1.12rem;
+  font-weight: 500;
+}
+
+.special-result-card p {
+  white-space: pre-line;
+  font-family: "ChillDIN", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(1.46rem, 5.7vw, 1.76rem);
+  font-weight: 700;
+  line-height: 1.86;
 }
 
 .result-key-elements {

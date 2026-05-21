@@ -13,12 +13,14 @@ import { track } from "./analytics";
 
 type Page = "cover" | "quiz" | "result";
 type PopupType = "persona" | "action" | "hidden" | "save";
+type SpecialResultId = "BLANK" | "ALLY" | "FREE";
 
 type AppState = {
   page: Page;
   questionIndex: number;
   answers: Answers;
   activePopup: PopupType | null;
+  specialResultId: SpecialResultId | null;
 };
 
 type ResultParts = {
@@ -31,20 +33,45 @@ const h = React.createElement;
 const allQuestions: Question[] = [q0, ...formalQuestions, ...hiddenQuestions];
 const homePadImage = new URL("../assets/reference/home-pad.png", import.meta.url).toString();
 const q0DropImage = new URL("../assets/reference/q0-drop.png", import.meta.url).toString();
-const startButtonImage = new URL("../assets/reference/start-button.png", import.meta.url).toString();
+const specialResultImage = new URL("../assets/reference/aef-result.png", import.meta.url).toString();
 
 const initialState: AppState = {
   page: "cover",
   questionIndex: 0,
   answers: {},
-  activePopup: null
+  activePopup: null,
+  specialResultId: null
+};
+
+const q0SpecialResults: Record<string, SpecialResultId> = {
+  A: "BLANK",
+  E: "ALLY",
+  F: "FREE"
+};
+
+const specialResults: Record<SpecialResultId, { name: string; englishName: string; body: string }> = {
+  BLANK: {
+    name: "潜力新星",
+    englishName: "BLANK",
+    body: "你正站在名为“成长”的后台，听着序曲，带着对未知的一丝好奇。属于你的剧本还是一片干净的留白，别着急，你的精彩开场，永远值得期待。"
+  },
+  ALLY: {
+    name: "月经同盟",
+    englishName: "ALLY",
+    body: "你虽不登台，但你能成为最坚实的后援，你用理解与行动，为身边人的每一种状态撑腰。"
+  },
+  FREE: {
+    name: "狂野艺术家",
+    englishName: "FREE",
+    body: "有些身体不以周期为线索。有些经历本就不同于主流叙事。\n你的身体不需要符合任何模板，它自有风景。"
+  }
 };
 
 const personaImages: Record<string, string> = {
   STAR: new URL("../assets/personas/cutouts/star.png", import.meta.url).toString(),
   WILD: new URL("../assets/personas/cutouts/wild.png", import.meta.url).toString(),
   COACH: new URL("../assets/personas/cutouts/coach.png", import.meta.url).toString(),
-  AIRDROP: new URL("../assets/personas/cutouts/AIRDROP.png", import.meta.url).toString(),
+  AIRDROP: new URL("../assets/personas/cutouts/news.png", import.meta.url).toString(),
   INVISIBLE: new URL("../assets/personas/cutouts/invisible.png", import.meta.url).toString(),
   SURPRISE: new URL("../assets/personas/cutouts/surprise.png", import.meta.url).toString(),
   ASSASSIN: new URL("../assets/personas/cutouts/assassin.png", import.meta.url).toString(),
@@ -82,6 +109,7 @@ function App() {
   const answerQuestion = (question: Question, option: QuestionOption) => {
     setState((current) => {
       const nextAnswers = { ...current.answers, [question.id]: option.id };
+      const specialResultId = question.id === q0.id ? q0SpecialResults[option.id] : null;
       const isLastQuestion = current.questionIndex >= allQuestions.length - 1;
 
       track("question_answered", {
@@ -89,6 +117,20 @@ function App() {
         option_id: option.id,
         question_index: current.questionIndex + 1
       });
+
+      if (specialResultId) {
+        track("test_completed", {
+          special_result: specialResultId,
+          q0_option_id: option.id
+        });
+        return {
+          ...current,
+          answers: nextAnswers,
+          page: "result",
+          activePopup: null,
+          specialResultId
+        };
+      }
 
       if (isLastQuestion) {
         const result = calculateResult(nextAnswers);
@@ -98,13 +140,14 @@ function App() {
           action_kit: result.actionKit.id,
           badges: result.badges
         });
-        return { ...current, answers: nextAnswers, page: "result", activePopup: null };
+        return { ...current, answers: nextAnswers, page: "result", activePopup: null, specialResultId: null };
       }
 
       return {
         ...current,
         answers: nextAnswers,
-        questionIndex: current.questionIndex + 1
+        questionIndex: current.questionIndex + 1,
+        specialResultId: null
       };
     });
   };
@@ -131,7 +174,11 @@ function App() {
       onAnswer: answerQuestion,
       onBack: goToPreviousQuestion
     }),
-    state.page === "result" && h(FinalResultPage, {
+    state.page === "result" && state.specialResultId && h(SpecialResultPage, {
+      result: specialResults[state.specialResultId],
+      onRestart: () => setState(initialState)
+    }),
+    state.page === "result" && !state.specialResultId && h(FinalResultPage, {
       calculatedResult,
       activePopup: state.activePopup,
       onOpenPopup: (activePopup: PopupType) => {
@@ -174,7 +221,7 @@ function CoverPage({ onStart }: { onStart: () => void }) {
       className: "cover-start-button",
       "aria-label": cover.cta
     },
-      h("img", { src: startButtonImage, alt: "", className: "cover-start-image" })
+      h("span", { className: "cover-start-blob" }, cover.cta)
     ),
     h("section", { className: "cover-copy relative z-10 text-black/82" },
       h("p", null, "你有没有想过，月经其实是一位我们的老朋友？", h("br"), "TA有时准时，有时随性；有时声势浩大，有时安静路过；", h("br"), "有时给你带来能量，有时让你只想躺平。"),
@@ -260,6 +307,77 @@ function badgeLabel(option: QuestionOption) {
   return id ? `${badgeById[id].name} · ${id}` : "无触发";
 }
 
+function useShareFeedback() {
+  const [showCopiedFeedback, setShowCopiedFeedback] = React.useState(false);
+  const copiedTimerRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => () => {
+    if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
+  }, []);
+
+  const shareResult = async () => {
+    track("share_clicked", { source: "result_page" });
+
+    try {
+      await navigator.clipboard?.writeText(window.location.href);
+    } catch {
+      // Some in-app browsers block clipboard access; the button still confirms the attempted share action.
+    }
+
+    setShowCopiedFeedback(true);
+    if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
+    copiedTimerRef.current = window.setTimeout(() => setShowCopiedFeedback(false), 3000);
+  };
+
+  return { showCopiedFeedback, shareResult };
+}
+
+function SpecialResultPage({
+  result,
+  onRestart
+}: {
+  result: { name: string; englishName: string; body: string };
+  onRestart: () => void;
+}) {
+  const { showCopiedFeedback, shareResult } = useShareFeedback();
+
+  return h("main", { className: "special-result-page result-page relative overflow-y-auto bg-white px-4 pb-7 pt-4" },
+    h(PhoneStatus),
+    h("section", { className: "relative mx-auto max-w-[430px] px-2 pt-6 text-center" },
+      h("h1", { className: "result-title font-cn font-semibold text-black" }, `${result.name} ${result.englishName}`),
+      h("div", { className: "result-key-elements special-key-elements", "aria-hidden": "true" },
+        h("span", { className: "result-pill result-pill-left" }, "✦"),
+        h("span", { className: "result-squiggle result-squiggle-left" }, "}"),
+        h("span", { className: "result-squiggle result-squiggle-right" }, "{"),
+        h("span", { className: "result-bubble" })
+      ),
+      h("figure", { className: "special-avatar-wrap mx-auto mt-5 flex items-center justify-center rounded-full bg-[#fbf0ed]" },
+        h("img", {
+          src: specialResultImage,
+          alt: `${result.name} ${result.englishName}人格形象`,
+          className: "special-avatar object-contain"
+        })
+      )
+    ),
+    h("section", { className: "special-result-card mx-auto" },
+      h("h2", { className: "font-cn" }, "人格档案"),
+      h("p", null, result.body)
+    ),
+    h("footer", { className: "mx-auto mt-6 max-w-[210px]" },
+      h("button", {
+        type: "button",
+        onClick: shareResult,
+        className: `result-footer-button result-footer-share w-full rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f264c5]/45 ${showCopiedFeedback ? "result-footer-button-copied" : ""}`
+      }, showCopiedFeedback ? "✅已复制" : "复制链接分享")
+    ),
+    h("button", {
+      type: "button",
+      onClick: onRestart,
+      className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
+    }, "重新测试")
+  );
+}
+
 function FinalResultPage({
   calculatedResult,
   activePopup,
@@ -276,31 +394,12 @@ function FinalResultPage({
   const parts = getResultParts(calculatedResult);
   const personaImage = personaImages[parts.persona.id] || personaImages.STAR;
   const hiddenTitle = parts.badges.length > 1 ? "特别勋章解读" : parts.badges[0]?.name || "特别勋章解读";
-  const [showCopiedFeedback, setShowCopiedFeedback] = React.useState(false);
-  const copiedTimerRef = React.useRef<number | null>(null);
-
-  React.useEffect(() => () => {
-    if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
-  }, []);
-
-  const shareResult = async () => {
-    track("share_clicked", { source: "result_page" });
-
-    try {
-      await navigator.clipboard?.writeText(window.location.href);
-    } catch {
-      // Some in-app browsers block clipboard access; the toast still confirms the attempted share action.
-    }
-
-    setShowCopiedFeedback(true);
-    if (copiedTimerRef.current) window.clearTimeout(copiedTimerRef.current);
-    copiedTimerRef.current = window.setTimeout(() => setShowCopiedFeedback(false), 3000);
-  };
+  const { showCopiedFeedback, shareResult } = useShareFeedback();
 
   return h("main", { className: "result-page relative min-h-screen overflow-y-auto bg-white px-4 pb-7 pt-4" },
     h(PhoneStatus),
     h("section", { className: "relative mx-auto max-w-[430px] px-2 pt-6 text-center" },
-      h("h1", { className: "font-cn text-[1.65rem] font-semibold text-black" }, "测试结果"),
+      h("h1", { className: "result-title font-cn font-semibold text-black" }, `${parts.persona.name} ${parts.persona.englishName}`),
       h("div", { className: "result-key-elements", "aria-hidden": "true" },
         h("span", { className: "result-pill result-pill-left" }, "✦"),
         h("span", { className: "result-squiggle result-squiggle-left" }, "}"),
@@ -331,14 +430,13 @@ function FinalResultPage({
       h("button", {
         type: "button",
         onClick: () => onOpenPopup("save"),
-        className: "rounded-lg bg-[#77d8df] px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
+        className: "result-footer-button rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
       }, "一键长图保存"),
       h("button", {
         type: "button",
         onClick: shareResult,
-        style: { backgroundColor: showCopiedFeedback ? "#f264c5" : "#f7a7dc" },
-        className: `result-share-button rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f264c5]/45 ${showCopiedFeedback ? "result-share-button-copied" : ""}`
-      }, showCopiedFeedback ? "☑️已复制" : "复制链接分享")
+        className: `result-footer-button result-footer-share rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f264c5]/45 ${showCopiedFeedback ? "result-footer-button-copied" : ""}`
+      }, showCopiedFeedback ? "✅已复制" : "复制链接分享")
     ),
     h("button", {
       type: "button",
