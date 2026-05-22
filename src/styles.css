@@ -92,12 +92,22 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: max(clamp(18px, 3.2dvh, 34px), env(safe-area-inset-top));
   padding-bottom: max(clamp(18px, 3.2dvh, 34px), env(safe-area-inset-bottom));
   background:
     radial-gradient(circle at 50% 33%, rgba(255, 255, 255, 0.38) 0 18%, rgba(255, 255, 255, 0.12) 45%, rgba(255, 255, 255, 0) 62%),
     linear-gradient(180deg, #fff0fa 0%, #fde8f6 42%, #f6c7e9 72%, #ed9ed8 88%, #69d7df 100%);
+}
+
+.cover-main {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .new-cover h1 {
@@ -116,6 +126,15 @@ button {
 
 .cover-copy > :not([hidden]) ~ :not([hidden]) {
   margin-top: clamp(14px, 2.1svh, 22px);
+}
+
+.cover-footer-note {
+  flex: 0 0 auto;
+  margin-top: clamp(14px, 2.4dvh, 26px);
+  font-size: clamp(0.68rem, 2.7vw, 0.8rem) !important;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.46);
+  text-align: center;
 }
 
 .cover-start-button {

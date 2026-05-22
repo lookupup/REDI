@@ -214,32 +214,35 @@ function CoverPage({ onStart }: { onStart: () => void }) {
   return h("main", {
     className: "new-cover relative flex flex-col items-center overflow-hidden px-9 text-center",
   },
-    h("section", { className: "relative z-10" },
-      h("h1", { className: "text-[1.82rem] font-bold leading-tight text-black" },
-        h("span", { className: "font-en" }, "REDI："),
-        h("span", { className: "font-cn" }, "测测你的月经人格")
+    h("div", { className: "cover-main" },
+      h("section", { className: "relative z-10" },
+        h("h1", { className: "text-[1.82rem] font-bold leading-tight text-black" },
+          h("span", { className: "font-en" }, "REDI："),
+          h("span", { className: "font-cn" }, "测测你的月经人格")
+        ),
+        h("p", { className: "mt-3 text-[1.32rem] leading-tight text-black/82" },
+          h("span", { className: "font-cn" }, "你的月经，比"),
+          h("span", { className: "font-en" }, "MBTI"),
+          h("span", { className: "font-cn" }, "更懂你")
+        )
       ),
-      h("p", { className: "mt-3 text-[1.32rem] leading-tight text-black/82" },
-        h("span", { className: "font-cn" }, "你的月经，比"),
-        h("span", { className: "font-en" }, "MBTI"),
-        h("span", { className: "font-cn" }, "更懂你")
+      h("section", { className: "cover-hero-mark", "aria-hidden": "true" },
+        h("img", { src: homePadImage, alt: "", className: "cover-hero-image" })
+      ),
+      h("button", {
+        type: "button",
+        onClick: onStart,
+        className: "cover-start-button",
+        "aria-label": cover.cta
+      },
+        h("img", { src: coverStartButtonImage, alt: "", className: "cover-start-image" })
+      ),
+      h("section", { className: "cover-copy relative z-10 text-black/82" },
+        h("p", null, "你有没有想过，月经其实是一位老朋友?"),
+        h("p", null, "这是一个关于你的“月经人格\"的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点\"原来不只我这样\"。", h("br"), "你的身体，一直有话说。")
       )
     ),
-    h("section", { className: "cover-hero-mark", "aria-hidden": "true" },
-      h("img", { src: homePadImage, alt: "", className: "cover-hero-image" })
-    ),
-    h("button", {
-      type: "button",
-      onClick: onStart,
-      className: "cover-start-button",
-      "aria-label": cover.cta
-    },
-      h("img", { src: coverStartButtonImage, alt: "", className: "cover-start-image" })
-    ),
-    h("section", { className: "cover-copy relative z-10 text-black/82" },
-      h("p", null, "你有没有想过，月经其实是一位老朋友?"),
-      h("p", null, "这是一个关于你的“月经人格\"的小测试。", h("br"), "里面有一点自我觉察，一点冷知识，", h("br"), "还有一点\"原来不只我这样\"。", h("br"), "你的身体，一直有话说。")
-    )
+    h("p", { className: "cover-footer-note" }, "*REDI：月经（RED）人格（Indicators）")
   );
 }
 
