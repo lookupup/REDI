@@ -788,6 +788,9 @@ button {
   width: min(370px, 88vw);
   max-height: min(620px, 76vh);
   overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
   border-radius: 22px;
   background: #f7c6e9;
   padding: 42px 28px 34px;

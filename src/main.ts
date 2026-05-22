@@ -517,11 +517,11 @@ function ResultPopup({
     ),
     h("article", { className: "result-popup-card" },
       h("button", { type: "button", className: "result-popup-close", "aria-label": "关闭弹窗", onClick: onClose }, "×"),
-      h("p", { className: "text-xs font-bold tracking-[0.16em] text-black/50" }, content.kicker),
+      content.kicker && h("p", { className: "text-xs font-bold tracking-[0.16em] text-black/50" }, content.kicker),
       h("h2", { id: "result-popup-title", className: "font-cn mt-2 text-[1.35rem] font-semibold text-black" }, content.title),
       h("div", { className: "mt-5 space-y-3 text-left text-[0.94rem] leading-7 text-black/78" },
         content.body.map((paragraph) => {
-          const isBadgeTitle = type === "hidden" && parts.badges.some((badge) => badge.name === paragraph);
+          const isBadgeTitle = type === "hidden" && parts.badges.some((badge) => paragraph.startsWith(`${badge.name} ·`));
           return h("p", { key: paragraph, className: isBadgeTitle ? "result-popup-badge-title" : undefined }, paragraph);
         })
       ),
@@ -643,9 +643,9 @@ function popupContentFor(type: PopupType, parts: ResultParts, calculatedResult: 
       : [{ id: "NONE", name: "暂未触发特别勋章", body: ["你这次没有触发额外特别勋章，结果会以主人格和行动锦囊为主。"] }];
 
     return {
-      kicker: badges.map((badge) => badge.id).join(" / "),
+      kicker: "",
       title: "特别勋章解读",
-      body: badges.flatMap((badge) => [badge.name, ...badge.body.slice(0, 2)]),
+      body: badges.flatMap((badge) => [`${badge.name} · ${"englishName" in badge ? badge.englishName : badge.id}`, ...badge.body]),
       tips: [] as string[]
     };
   }
