@@ -33,8 +33,8 @@ export const q0: Question = {
   options: [
     option("A", "我还没来过月经", null, null, ["BLANK"]),
     option("B", "我在来月经", null, null),
-    option("C", "我的月经暂时不来（怀孕、哺乳、药物、压力、进食障碍、主动使用皮下埋植技术等）", null, null, ["GAP"]),
-    option("D", "我曾经来过月经，现在不来了（处于围绝经期/已绝经/因为手术而停止来月经）", null, null, ["GRAD"]),
+    option("C", "我的月经暂时不来（怀孕、哺乳等特殊身体情况）", null, null, ["GAP"]),
+    option("D", "我曾经来过月经，现在不来了（处于围绝经期/已绝经/因为其它原因而停止来月经）", null, null, ["GRAD"]),
     option("E", "我不来月经", null, null, ["ALLY"]),
     option("F", "其它情况", null, null, ["FREE"])
   ]
