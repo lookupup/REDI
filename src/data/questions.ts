@@ -55,14 +55,14 @@ export const formalQuestions: Question[] = [
   },
   {
     id: "P2",
-    title: "痛经对你来说是什么级别的“身体剧本”？",
+    title: "P2｜痛经对你来说是什么级别的“身体剧本”？",
     type: "formal",
     dimension: "P",
     options: [
-      option("A", "年度大戏：每次必到，止痛药是我的灵魂伴侣，严重时只能和床组队休息", 3, "P"),
+      option("A", "月度大戏：每次必到，遵医嘱使用止痛药，严重时只能和床组队休息", 3, "P"),
       option("B", "日常短剧：不舒服，但靠热水袋和“我很好”的表情包能撑过去", 2, "P"),
       option("C", "花絮片段：偶尔微微痛，热敷一下就像给肚子发了张“休息券”", 1, "P"),
-      option("D", "预告都没发：痛经？这部剧我没收到试镜通知", 0, "P")
+      option("D", "剧本没写我：痛经？这部剧里没有我的角色", 0, "P")
     ]
   },
   {
@@ -255,7 +255,7 @@ export const formalQuestions: Question[] = [
       option("B", "事后补票型：用完了才一拍脑袋想起来，然后顺手买一包", 1, "D"),
       option("C", "主动备货型：看到存量告急就自觉补货，绝不让自己陷入危机", 2, "D"),
       option("D", "囤囤鼠模式：家里随时有备货，从不断货，像开了一家小卖部", 3, "D"),
-      option("E", "我不会用完！我用的不是一次性产品，是月经杯/月经碟/月经裤等", 3, "D", ["ECO"])
+      option("E", "我不会用完！我用的不是卫生巾/棉条，是月经杯/月经碟/月经裤等", 3, "D", ["ECO"])
     ]
   },
   {
@@ -305,7 +305,7 @@ export const hiddenQuestions: Question[] = [
     options: [
       option("A", "没有，和大多数人差不多", null, null),
       option("B", "我有慢性病或特殊健康情况，会影响我的经期体验或管理方式", null, null, ["VOYAGER"]),
-      option("C", "我是一名身障者，经期管理比一般人更复杂", null, null, ["HARD"]),
+      option("C", "我是一名残障人士，经期管理比一般人更复杂", null, null, ["HARD"]),
       option("D", "月经让我在心理或情绪上承受了额外的负担或压力", null, null, ["DIVER"])
     ]
   },
@@ -315,7 +315,7 @@ export const hiddenQuestions: Question[] = [
     type: "hidden",
     dimension: null,
     options: [
-      option("A", "一次性卫生巾，使用方便", null, null),
+      option("A", "卫生巾，使用方便", null, null),
       option("B", "卫生棉条，舒适度高", null, null),
       option("C", "月经杯 / 月经碟等可重复使用用品", null, null, ["ECO"]),
       option("D", "我所在的地方买不到太多种类，或者价格太高，只能有什么用什么，有时候甚至用卫生纸或布条代替", null, null, ["RESILIENT"])
@@ -327,7 +327,7 @@ export const hiddenQuestions: Question[] = [
     type: "hidden",
     dimension: null,
     options: [
-      option("A", "我在公司/学校/社区设置了免费卫生用品互助盒，应急取用、取一还一，为突发月经期的女性提供应急物资支持", null, null, ["ACTION"]),
+      option("A", "我在公司/学校/社区设置了免费卫生用品互助盒，应急取用、取一还一，为突然来月经的女性提供应急物资支持", null, null, ["ACTION"]),
       option("B", "我在网上或现实里为月经假、公共卫生间是否配备经期产品、月经税减免等摇旗呐喊过", null, null, ["ACTION"]),
       option("C", "我关注或参与过帮助偏远地区女孩获取卫生用品的行动（如捐赠、义卖、传播信息等）", null, null, ["ACTION"]),
       option("D", "暂时还没行动，但我在精神上举双手支持", null, null)

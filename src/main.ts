@@ -273,6 +273,9 @@ function QuestionPage({
     ? hiddenSymbols[question.id] || "spark"
     : dimensionSymbols[question.dimension || ""] || "spark";
   const isWarmup = question.id === q0.id;
+  const questionTitle = question.title.startsWith(`${question.id}｜`)
+    ? question.title
+    : `${question.id}. ${question.title}`;
 
   return h("main", { className: `question-page ${isWarmup ? "question-page-warmup" : ""} flex flex-col bg-white px-7 pb-8 pt-5` },
     h(PhoneStatus),
@@ -291,7 +294,7 @@ function QuestionPage({
     h("section", { className: "question-body flex flex-1 flex-col justify-center pb-10" },
       h("div", { className: "question-title-row mb-7 flex items-center gap-4" },
         h(Symbol, { type: symbol, className: "question-icon" }),
-        h("p", { className: "font-cn text-left text-[1.08rem] leading-7 text-black" }, `${question.id}. ${question.title}`)
+        h("p", { className: "font-cn text-left text-[1.08rem] leading-7 text-black" }, questionTitle)
       ),
       h("div", { className: "grid gap-5", role: "list", "aria-label": `${question.id} 选项` },
         question.options.map((option) => h("button", {

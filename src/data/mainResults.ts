@@ -16,7 +16,7 @@ export const mainResults = [
     id: "WILD",
     name: "大艺术家",
     englishName: "WILD",
-    declaration: "我随时可能炸场，日程表？就是用来打破的。",
+    declaration: "我随时可能闪亮登场，日程表？就是用来打破的。",
     tags: ["存在感强", "带能量", "不规律"],
     body: [
       "你的月经是一位充满灵感的大艺术家：它总在你最意想不到的时候登场，能量满格，存在感极强。",
