@@ -448,15 +448,16 @@ button {
 
 .result-page .result-footer-button {
   min-height: 64px;
-  background: linear-gradient(180deg, #f264c5 0%, #d8b7e5 48%, #77d8df 100%);
+  border: 3px solid #f3c3e7;
+  background: #ffffff;
 }
 
 .result-page .result-footer-share {
-  background: linear-gradient(180deg, #77d8df 0%, #d8b7e5 48%, #f264c5 100%);
+  border-color: #77d8df;
 }
 
 .result-page .result-footer-button-copied {
-  background: linear-gradient(180deg, #ffffff 0%, #fde8f6 28%, #f7a7dc 66%, #f264c5 100%);
+  background: #ffffff;
 }
 
 .result-page > button {

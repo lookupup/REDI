@@ -385,15 +385,16 @@ function SpecialResultPage({
       h("button", {
         type: "button",
         onClick: shareResult,
-        className: `result-footer-button result-footer-share w-full rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f264c5]/45 ${showCopiedFeedback ? "result-footer-button-copied" : ""}`
-      }, showCopiedFeedback ? "✅已复制" : "复制链接分享")
+        className: "result-footer-button result-footer-share w-full rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
+      }, "复制链接分享")
     ),
     h("button", {
       type: "button",
       onClick: onRestart,
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
     }, "重新测试"),
-    h(ResultDisclaimer)
+    h(ResultDisclaimer),
+    h("div", { className: `result-toast ${showCopiedFeedback ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, "✅已复制")
   );
 }
 
@@ -460,8 +461,8 @@ function FinalResultPage({
       h("button", {
         type: "button",
         onClick: shareResult,
-        className: `result-footer-button result-footer-share rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#f264c5]/45 ${showCopiedFeedback ? "result-footer-button-copied" : ""}`
-      }, showCopiedFeedback ? "✅已复制" : "复制链接分享")
+        className: "result-footer-button result-footer-share rounded-lg px-4 py-4 text-sm font-medium text-black outline-none transition hover:-translate-y-0.5 focus-visible:ring-4 focus-visible:ring-[#77d8df]/45"
+      }, "复制链接分享")
     ),
     h("button", {
       type: "button",
@@ -469,6 +470,7 @@ function FinalResultPage({
       className: "mx-auto mt-4 block text-xs text-black/45 underline underline-offset-4"
     }, "重新测试"),
     h(ResultDisclaimer),
+    h("div", { className: `result-toast ${showCopiedFeedback ? "result-toast-visible" : ""}`, role: "status", "aria-live": "polite" }, "✅已复制"),
     activePopup && h(ResultPopup, { type: activePopup, parts, calculatedResult, onClose: onClosePopup })
   );
 }
